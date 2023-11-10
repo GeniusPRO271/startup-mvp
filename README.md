@@ -20,17 +20,11 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-## Learn More
+## Updates
 
-To learn more about Next.js, take a look at the following resources:
+| Fecha | Update |
+|---|---|
+| 8/11/2023 | **INICIO** Migración de código para empezar un inicio más limpio y reutilizable |
+| 10/11/2023 | **FINALIZACION** Implementación de las clases de cada elemento del plano. Ahora se puede ver el plano. **INICIO** Implementación de Redux |
+| 11/11/2023 | **FUTURO**  Finalizar la Implementación de Redux |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
