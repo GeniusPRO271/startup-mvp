@@ -69,3 +69,38 @@
     vertical-align: middle;
     overflow-clip-margin: content-box;
 }
+
+/*  Style for ToolBar  */ 
+
+.toolBar{
+  position: absolute;
+  left: 20px;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  height: 480px;
+  border-radius: 3px;
+  z-index: 7;
+  display: block;
+  background-color: #f4f4f4;
+  box-shadow: 0 2px 4px rgba(0,0,0,.25);
+  width: 40px;
+}
+
+.toolBarItem{
+  position: relative;
+}
+
+.toolBarbutton{
+  display: flex;
+  width: 40px;
+  height: 40px;
+  border: none;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  cursor: pointer;
+}

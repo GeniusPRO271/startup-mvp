@@ -1,4 +1,7 @@
-class Plane {
+import React from "react"
+import Building from "./Building"
+
+export default class Plane {
     public PlaneId: string
     public Building:Building
 
