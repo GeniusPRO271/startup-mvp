@@ -2,8 +2,8 @@
 import React, { useState } from "react";
 import style from "@/app/page.module.css";
 import PlaneContext from "./PlaneContext";
-import Building from "@/app/types/Building";
-import Plane from "@/app/types/Plane";
+import Building from "@/types/Building";
+import Plane from "@/types/Plane";
 
 // Interface of whiteboard in the future should be a class with mothods
 interface WhiteBoard {

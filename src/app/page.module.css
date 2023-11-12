@@ -103,4 +103,9 @@
   -ms-flex-align: center;
   align-items: center;
   cursor: pointer;
+  background-color: transparent;
+  border-radius: 3px;
+}
+.toolBarbutton:active{
+  background-color: lightblue;
 }

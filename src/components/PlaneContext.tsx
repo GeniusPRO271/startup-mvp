@@ -1,4 +1,4 @@
-import Plane from "@/app/types/Plane";
+import Plane from "@/types/Plane";
 import React from "react";
 
 function PlaneContext(plane: Plane) {
