@@ -1,7 +1,7 @@
-import Joints from "./Layers/Joints"
 import Slabs from "./Layers/Slabs"
 import Walls from "./Layers/Wall"
 import BuildingLayer from "./BuildingLayer"
+
 
 export default class Floor{
     public FloorId : string

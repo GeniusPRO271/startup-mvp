@@ -1,3 +1,5 @@
+import ITool from "../interfaces/ITool"
+
 export default class ToolKit{
     public Id:string
     public Tools: ITool[]

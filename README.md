@@ -26,5 +26,5 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 |---|---|
 | 8/11/2023 | **INICIO** Migración de código para empezar un inicio más limpio y reutilizable |
 | 10/11/2023 | **FINALIZACION** Implementación de las clases de cada elemento del plano. Ahora se puede ver el plano. **INICIO** Implementación de Redux |
-| 11/11/2023 | **FUTURO**  Finalizar la Implementación de Redux |
+| 12/11/2023 | **FINALIZACION** La Implementación de Redux para uso en el futuro  + Implementacion de botones de cada layer  **INICIO**  Implementacion de boton para cambiar piso|
 

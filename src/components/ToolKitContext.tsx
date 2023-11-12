@@ -1,17 +1,20 @@
-import ToolKit from "@/app/types/Tool";
-import LayerToggle from "@/app/types/tools/LayerToggle";
+"use client"
+
+import ToolKit from "@/types/tools/Tool";
+import LayerToggle from "@/types/tools/LayerToggle";
 import React from "react";
 import style from "@/app/page.module.css"
 import Image from "next/image";
-import WallIcon from "@/assets/block-brick.svg"
+import { JoinIcon, SlabIcon, WallIcon } from "@/assets/Icons/icon";
+import ITool from "@/types/interfaces/ITool";
 
 function ToolKitContext() {
 
-    const WallLayerToggle = new LayerToggle("W-Num","wall")
-    const SlabLayerToggle = new LayerToggle("Slab-Num","Slab")
-    const JointLayerToggle = new LayerToggle("Joint-Num","Joint")
+  const WallLayerToggle = new LayerToggle("W-Num","wall", new WallIcon(), "walls")
+  const JoinLayerToggle = new LayerToggle("J-Num","join", new JoinIcon(), "wallNodes")
+  const SlabLayerToggle = new LayerToggle("S-Num","slab", new SlabIcon(), "slabs")
 
-    const toolKit = new ToolKit("ToolKit", [WallLayerToggle,SlabLayerToggle,JointLayerToggle] )
+  const toolKit = new ToolKit("ToolKit", [WallLayerToggle,JoinLayerToggle,SlabLayerToggle] )
 
   return (
     <div className={style.toolBar} id={toolKit.Id}>
@@ -27,11 +30,10 @@ function ToolKitContext() {
 }
 
 function Tool({ tool }: { tool: ITool}) {
-    console.log(tool)
   return (
     <div className={style.toolBarItem} id={tool.Id} key={tool.Id}>
-      <button className={style.toolBarbutton}>
-        <Image src={WallIcon} alt="WallIcon" width={16} height={16}/>
+      <button className={style.toolBarbutton}  onClick={() => {tool.OnClick()}}>
+        <Image src={tool.Icon?.Src} alt={"ToolIcon_"+tool.Id} width={16} height={16}/>
       </button>
     </div>
   );

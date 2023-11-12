@@ -1,6 +1,5 @@
 import React from "react";
 import BuildingLayer from "../BuildingLayer";
-import { time } from "console";
 
 export default class Slabs extends BuildingLayer {
   public CoordsGroup: Array<Slab>;
