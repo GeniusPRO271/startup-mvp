@@ -1,36 +1,56 @@
-import BuildingLayer from "@/types/BuildingLayer"
-import Floor from "@/types/Floor"
-import { PayloadAction, createSlice } from "@reduxjs/toolkit"
-import exp from "constants"
+// Assuming your Redux slice is in a file like floorSlice.ts
 
-// THIS IS AN EXAMPLE 
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import Floor from "@/types/Floor";
+import { RootState } from "../store";
 
-type InitialState = {
-    floorNumber:number
-    layers:Array<BuildingLayer>
+interface FloorState {
+  selectedFloor: string,
+  floors: any[];
 }
-const initialState = {
-    floorNumber: 0,
-    layers: []
-} as InitialState
 
-export const floor = createSlice({
-    name: "floor",
-    initialState,
-    reducers: {
-        clearLayers: () => {
-            return initialState
-        },
-        addLayer: (state, action: PayloadAction<BuildingLayer>) => {
-            console.log("adding layer", action.payload)
-            state.layers.push(action.payload)
-            console.log(state.layers)
+const initialState: FloorState = {
+  selectedFloor: "S1",
+  floors: [],
+};
+
+const floorSlice = createSlice({
+  name: "floor",
+  initialState,
+  reducers: {
+    addFloors: (state, action: PayloadAction<string>) => {
+        try{
+            state.floors.push(action.payload);
             return state
+        } catch(err){
+          console.log("ERROR AT addFloors: ", err)
         }
+    },
+    replaceFloors: (state, action: PayloadAction<string[]>) => {
+        try{
+            state.floors = action.payload;
+            return state
+        } catch(err){
+          console.log("ERROR AT replaceFloors: ", err)
+        }
+    },
+    clearFloors: (state) => {
+      state.floors = [];
+    },
+    changeActiveFloor: (state, action: PayloadAction<string>) => {
+      try{
+        state.selectedFloor = action.payload
+        return state
+      }catch(err){
+        console.log("ERROR AT changeActiveFloor: ", err)
+      }
+
     }
-})
+  },
+});
 
-export const {clearLayers, addLayer} = floor.actions;
-export default floor.reducer;
+export const { addFloors, clearFloors,replaceFloors,changeActiveFloor} = floorSlice.actions;
+export default floorSlice.reducer;
 
-// THIS IS AN EXAMPLE
+export const selectFloors = (state: RootState) => state.floorReducer.floors;
+export const selectActiveFloor = (state: RootState) => state.floorReducer.selectedFloor;

@@ -44,7 +44,9 @@ export default class Walls extends BuildingLayer{
                 <g id={this.WallNodes.Id} key={"joins_"+this.WallNodes.Id}>
                     {this.WallNodes.CoordsGroup.map((joint:Joint) => {
                         return (
-                            joint.render()
+                            <g key={"group"+joint.Id}>
+                                {joint.render()}
+                            </g>
                         )
                     })}
                 </g>
