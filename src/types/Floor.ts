@@ -5,13 +5,13 @@ import BuildingLayer from "./BuildingLayer"
 
 export default class Floor{
     public FloorId : string
+    public FloorNumber: string
     public Layers: Array<BuildingLayer>
-    public RawData: any
 
-    constructor(floorId:string, rawData: any){
+    constructor(floorId:string, rawData: any, floorNumber:string){
         this.FloorId = floorId
         this.Layers = this.getLayers(rawData)
-        this.RawData = rawData
+        this.FloorNumber = floorNumber 
     }
 
     private getLayers(rawData:any) : Array<BuildingLayer>{
@@ -19,6 +19,7 @@ export default class Floor{
             let layers: Array<BuildingLayer> = []
 
             for(const layer in rawData){
+
                 if(layer == "walls"){
                     const layerData =  new Walls(rawData[layer],layer)
                     layers.push(layerData)

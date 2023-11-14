@@ -1,78 +1,86 @@
-/*  Style for WhiteBoard  */ 
-.editor{
-    display: block;
-    position: relative;
-    font-family: Open Sans;
-    font-size: 13px;
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    background-color: #fff;
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
-  }
-  .canvasBox{
-    position: relative;
-    background-color: #d8d8d8;
-    margin: 0 5px 0 0;
-    padding: 0;
-    overflow: scroll;
-    -webkit-transition: max-width .3s cubic-bezier(.165,.84,.44,1)0s,margin-left .3s cubic-bezier(.165,.84,.44,1) 0s;
-    transition: max-width .3s cubic-bezier(.165,.84,.44,1) 0s,margin-left .3s cubic-bezier(.165,.84,.44,1) 0s;
-    display: block;
-    width: 100%;
-    height: 100%;
-    box-sizing: inherit;
-  }
-  .canvas{
-    position: relative;
-    box-sizing: inherit;
-    display: block;
-  }
-  .layer_wrapper{
-    height: 100%;
-    position: relative;
-    -webkit-transform-origin: 0 0;
-    transform-origin: 0 0;
-    width: 100%;
-    background-repeat: no-repeat;
-    -webkit-box-sizing: inherit;
-    box-sizing: inherit;
-  }
-  .canvas_grid{
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    box-shadow: 0 2px 4px 0 rgba(0,0,0,.25);
-    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MCIgaGVpZ2h0PSI1MCIgdmlld0JveD0iMCAwIDUwIDUwIj4KPGRlZnM+CjxzdHlsZT4uYXtmaWxsOiNhZmFmYWY7fS5iLC5je2ZpbGw6bm9uZTtzdHJva2U6I2FmYWZhZjtzdHJva2UtbWl0ZXJsaW1pdDoxMDt9LmJ7c3Ryb2tlLWRhc2hhcnJheToxIDE7fTwvc3R5bGU+CjwvZGVmcz4KPHBhdGggY2xhc3M9ImEiIGQ9Ik01MCwxVjUwSDFWMUg1MG0xLTFIMFY1MUg1MVYwWiIvPgo8bGluZSBjbGFzcz0iYiIgeTE9IjEwLjUiIHgyPSI0OSIgeTI9IjEwLjUiLz4KPGxpbmUgY2xhc3M9ImIiIHkxPSIyMC41IiB4Mj0iNDkiIHkyPSIyMC41Ii8+CjxsaW5lIGNsYXNzPSJiIiB5MT0iMzAuNSIgeDI9IjQ5IiB5Mj0iMzAuNSIvPgo8bGluZSBjbGFzcz0iYiIgeTE9IjQwLjUiIHgyPSI0OSIgeTI9IjQwLjUiLz4KPGxpbmUgY2xhc3M9ImIiIHgxPSIxMC41IiB5MT0iNDkiIHgyPSIxMC41Ii8+CjxsaW5lIGNsYXNzPSJiIiB4MT0iMjAuNSIgeTE9IjQ5IiB4Mj0iMjAuNSIvPgo8bGluZSBjbGFzcz0iYiIgeDE9IjMwLjUiIHkxPSI0OSIgeDI9IjMwLjUiLz4KPGxpbmUgY2xhc3M9ImIiIHgxPSI0MC41IiB5MT0iNDkiIHgyPSI0MC41Ii8+Cjwvc3ZnPg==);
-    background-repeat: repeat;
-    background-size: 50px;
-    background-position: 11000px 4000px;
-  } 
-  .canvas__layer{
-    height: 100%;
-    left: 0;
-    overflow: visible;
-    position: absolute;
-    top: 0;
-    -webkit-transform-origin: 0 0;
-    transform-origin: 0 0;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    width: 100%;
-    vertical-align: middle;
-    overflow-clip-margin: content-box;
+/*  Style for WhiteBoard  */
+.editor {
+  display: block;
+  position: relative;
+  font-family: Open Sans;
+  font-size: 13px;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background-color: #fff;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+.canvasBox {
+  position: relative;
+  background-color: #d8d8d8;
+  margin: 0 5px 0 0;
+  padding: 0;
+  overflow: scroll;
+  -webkit-transition: max-width 0.3s cubic-bezier(0.165, 0.84, 0.44, 1) 0s,
+    margin-left 0.3s cubic-bezier(0.165, 0.84, 0.44, 1) 0s;
+  transition: max-width 0.3s cubic-bezier(0.165, 0.84, 0.44, 1) 0s,
+    margin-left 0.3s cubic-bezier(0.165, 0.84, 0.44, 1) 0s;
+  display: block;
+  width: 100%;
+  height: 100%;
+  box-sizing: inherit;
+}
+.canvas {
+  position: relative;
+  box-sizing: inherit;
+  display: block;
+}
+.layer_wrapper {
+  height: 100%;
+  position: relative;
+  -webkit-transform-origin: 0 0;
+  transform-origin: 0 0;
+  width: 100%;
+  background-repeat: no-repeat;
+  -webkit-box-sizing: inherit;
+  box-sizing: inherit;
+}
+.canvas_grid {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MCIgaGVpZ2h0PSI1MCIgdmlld0JveD0iMCAwIDUwIDUwIj4KPGRlZnM+CjxzdHlsZT4uYXtmaWxsOiNhZmFmYWY7fS5iLC5je2ZpbGw6bm9uZTtzdHJva2U6I2FmYWZhZjtzdHJva2UtbWl0ZXJsaW1pdDoxMDt9LmJ7c3Ryb2tlLWRhc2hhcnJheToxIDE7fTwvc3R5bGU+CjwvZGVmcz4KPHBhdGggY2xhc3M9ImEiIGQ9Ik01MCwxVjUwSDFWMUg1MG0xLTFIMFY1MUg1MVYwWiIvPgo8bGluZSBjbGFzcz0iYiIgeTE9IjEwLjUiIHgyPSI0OSIgeTI9IjEwLjUiLz4KPGxpbmUgY2xhc3M9ImIiIHkxPSIyMC41IiB4Mj0iNDkiIHkyPSIyMC41Ii8+CjxsaW5lIGNsYXNzPSJiIiB5MT0iMzAuNSIgeDI9IjQ5IiB5Mj0iMzAuNSIvPgo8bGluZSBjbGFzcz0iYiIgeTE9IjQwLjUiIHgyPSI0OSIgeTI9IjQwLjUiLz4KPGxpbmUgY2xhc3M9ImIiIHgxPSIxMC41IiB5MT0iNDkiIHgyPSIxMC41Ii8+CjxsaW5lIGNsYXNzPSJiIiB4MT0iMjAuNSIgeTE9IjQ5IiB4Mj0iMjAuNSIvPgo8bGluZSBjbGFzcz0iYiIgeDE9IjMwLjUiIHkxPSI0OSIgeDI9IjMwLjUiLz4KPGxpbmUgY2xhc3M9ImIiIHgxPSI0MC41IiB5MT0iNDkiIHgyPSI0MC41Ii8+Cjwvc3ZnPg==);
+  background-repeat: repeat;
+  background-size: 50px;
+  background-position: 11000px 4000px;
+}
+.canvas__layer {
+  height: 100%;
+  left: 0;
+  overflow: visible;
+  position: absolute;
+  top: 0;
+  -webkit-transform-origin: 0 0;
+  transform-origin: 0 0;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  width: 100%;
+  vertical-align: middle;
+  overflow-clip-margin: content-box;
+}
+.activeFloor {
+  display: block;
+}
+.floor {
+  display: none;
 }
 
-/*  Style for ToolBar  */ 
+/*  Style for ToolBar  */
 
-.toolBar{
+.toolBar {
   position: absolute;
   left: 20px;
   top: 0;
@@ -82,16 +90,16 @@
   border-radius: 3px;
   z-index: 7;
   display: block;
-  background-color: #f4f4f4;
-  box-shadow: 0 2px 4px rgba(0,0,0,.25);
+  background-color: rgb(245, 245, 245);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
   width: 40px;
 }
 
-.toolBarItem{
+.toolBarItem {
   position: relative;
 }
 
-.toolBarbutton{
+.toolBarbutton {
   display: flex;
   width: 40px;
   height: 40px;
@@ -106,6 +114,79 @@
   background-color: transparent;
   border-radius: 3px;
 }
-.toolBarbutton:active{
+.toolBarbutton:hover{
   background-color: lightblue;
+}
+.toolBarbutton:active {
+  background-color: lightblue;
+}
+
+/* Style of the floor button */
+.basicPanelContainer{
+  width: 100%;
+  display: flex;
+}
+.basicPanel {
+  left: 45px;
+  top: 0px;
+  overflow-y: scroll;
+  position: absolute;
+  padding: 10px;
+  background-color: rgb(245, 245, 245); 
+  color: #4a4a4a;
+  min-width: 160px;
+  min-height: 260px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 11;
+}
+.floorsSidePanel{
+  left: 230px;
+  top: 0px;
+  position: absolute;
+  background-color: transparent; 
+  color: #4a4a4a;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 11;
+}
+.floorsSidePanelItem{
+  width: 40px;
+  height: 40px;
+  background-color: rgb(245, 245, 245); 
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+.floorsSidePanelItem:hover{
+  background-color: #e4e4e4;
+}
+
+.ActiveFloorTitle{
+  color: #000;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  width: 100px;
+  border-bottom: #D9D9D9 1px solid;
+}
+/* Hide scrollbar track for WebKit browsers */
+.basicPanel::-webkit-scrollbar {
+  width: 0; /* Set width to 0 to hide scrollbar */
+}
+
+/* Optional: Customize the appearance of the scrollbar thumb */
+.basicPanel::-webkit-scrollbar-thumb {
+  background-color: transparent;
 }
