@@ -1,9 +1,20 @@
+@font-face {
+  font-family: "Product Sans";
+  src: url("../assets/fonts/product-sans/ProductSansRegular.ttf");
+  font-weight: normal;
+}
+@font-face {
+  font-family: "Product Sans";
+  src: url("../assets/fonts/product-sans/ProductSansBold.ttf");
+  font-weight: bold;
+}
+
 body{
   margin: 0;
   height: 100%;
   overflow: hidden;
   font-size: 16px;
-  font-family: Open Sans,Helvetica,Arial,sans-serif;
+  font-family: "Product Sans",Helvetica,Arial,sans-serif;
   font-weight: 400;
   font-style: normal;
   -moz-osx-font-smoothing: grayscale;
@@ -12,4 +23,7 @@ body{
   -moz-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
   text-size-adjust: 100%;
+}
+button{
+  font-family: "Product Sans";
 }

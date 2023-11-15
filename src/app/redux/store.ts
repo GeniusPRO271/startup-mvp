@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 import floorReducer from "./slices/floorSlice"
+import buttonSlice from "./slices/buttonSlice"
 // THIS IS AN EXAMPLE
 export const store = configureStore({
   reducer: {
-    floorReducer
+    floorReducer,
+    buttonSlice
   },
 })
 
