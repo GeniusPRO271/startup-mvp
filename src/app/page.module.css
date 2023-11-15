@@ -125,17 +125,19 @@
 .basicPanelContainer{
   width: 100%;
   display: flex;
+  flex-direction: column;
 }
 .basicPanel {
   left: 45px;
   top: 0px;
-  overflow-y: scroll;
+  overflow-y: none;
   position: absolute;
   padding: 10px;
   background-color: rgb(245, 245, 245); 
   color: #4a4a4a;
   min-width: 160px;
   min-height: 260px;
+  max-height: 260px;
   border-radius: 5px;
   display: flex;
   flex-direction: column;
@@ -181,9 +183,42 @@
   width: 100px;
   border-bottom: #D9D9D9 1px solid;
 }
+.WallListText{
+  color: #000;
+  font-family: Inter;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  padding-top: 8px;
+}
+.WallListTextButtonContainer{
+  display: flex ;
+  flex-direction: column;
+  overflow-y: scroll;
+  height: 200px;
+}
+.WallListTextButton{
+  color: #000;
+  font-family: Inter;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  background-color: transparent;
+  border: none;
+  border-radius: 3px;
+  padding: 10px 0px;
+}
+.WallListTextButton:hover{
+  background-color: #e4e4e4;
+}
 /* Hide scrollbar track for WebKit browsers */
 .basicPanel::-webkit-scrollbar {
   width: 0; /* Set width to 0 to hide scrollbar */
+}
+.WallListTextButtonContainer::-webkit-scrollbar {
+  width: 0;
 }
 
 /* Optional: Customize the appearance of the scrollbar thumb */

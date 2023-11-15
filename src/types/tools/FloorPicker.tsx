@@ -52,6 +52,30 @@ export default class FloorPicker implements ITool {
                 >   
                   {data.FloorNumber}
                 </div>
+                <div
+                  className={style.WallListText}
+                  key={data.FloorNumber}
+                >   
+                  Lista de Muros:
+                </div>
+                <div className={style.WallListTextButtonContainer}>
+                {
+                  data.Layers && data.Layers.map((layerName) => {
+                    {if(layerName.Id == "walls"){
+                      return( layerName.CoordsGroup.map((layer) => {
+                          return(
+                            <button
+                              className={style.WallListTextButton}
+                              key={data.FloorNumber}
+                            >   
+                              A-{layer.Id}
+                            </button>
+                          )
+                      }) )
+                    }}
+                  })
+                }
+                </div>
               </div>
             );}
           })}
