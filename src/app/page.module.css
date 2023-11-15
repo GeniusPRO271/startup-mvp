@@ -1,8 +1,18 @@
+@font-face {
+  font-family: "Product Sans";
+  src: url("../assets/fonts/product-sans/ProductSansRegular.ttf");
+  font-weight: normal;
+}
+@font-face {
+  font-family: "Product Sans";
+  src: url("../assets/fonts/product-sans/ProductSansBold.ttf");
+  font-weight: bold;
+}
 /*  Style for WhiteBoard  */
 .editor {
   display: block;
   position: relative;
-  font-family: Open Sans;
+  font-family: "Product Sans";
   font-size: 13px;
   width: 100vw;
   height: 100vh;
@@ -178,14 +188,14 @@
   color: #000;
   font-size: 24px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: bold;
   line-height: normal;
   width: 100px;
   border-bottom: #D9D9D9 1px solid;
 }
 .WallListText{
   color: #000;
-  font-family: Inter;
+  font-family: "Product Sans";
   font-size: 18px;
   font-style: normal;
   font-weight: 400;
@@ -200,7 +210,7 @@
 }
 .WallListTextButton{
   color: #000;
-  font-family: Inter;
+  font-family: "Product Sans";
   font-size: 18px;
   font-style: normal;
   font-weight: 400;
