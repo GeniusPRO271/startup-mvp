@@ -5,13 +5,19 @@ import { ReactNode } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   changeActiveFloor,
+  changeShowfloorInfo,
   selectActiveFloor,
   selectFloors,
 } from "@/app/redux/slices/floorSlice";
 import Floor from "../Floor";
 import { motion } from "framer-motion";
-import { ButtonState, changeActiveButton, changeIsButtonActive, selectActiveButton, selectIsbuttonActive } from "@/app/redux/slices/buttonSlice";
-import { BlobOptions } from "buffer";
+import {
+  changeActiveButton,
+  changeIsButtonActive,
+  selectActiveButton,
+  selectIsbuttonActive,
+} from "@/app/redux/slices/buttonSlice";
+import { Wall } from "../Layers/Wall";
 
 export default class FloorPicker implements ITool {
   Id: string;
@@ -26,7 +32,11 @@ export default class FloorPicker implements ITool {
     this.ActiveFloor = "S1";
   }
 
-  private popUp(floorsString: any[], activeButton:string, IsbuttonActive:boolean): ReactNode {
+  private popUp(
+    floorsString: any[],
+    activeButton: string,
+    IsbuttonActive: boolean
+  ): ReactNode {
     const dispatch = useDispatch();
     const activeFloor = useSelector(selectActiveFloor);
     const floors = floorsString.map((floor) => {
@@ -43,45 +53,52 @@ export default class FloorPicker implements ITool {
     const panel = {
       NotActive: {
         opacity: 0,
-        x:-30,
+        x: -30,
       },
       Active: {
         opacity: 1,
-        x:0,
+        x: 0,
         transition: {
           duration: 0.15,
-        }
+        },
       },
     };
     const panelSide = {
       NotActive: {
         opacity: 0,
-        x:-30,
+        x: -30,
       },
       Active: {
         opacity: 1,
-        x:0,
+        x: 0,
         transition: {
           duration: 0.15,
           delayChildren: 0,
-          staggerChildren: 0.1
-        }
+          staggerChildren: 0.1,
+        },
       },
     };
     const panelSideButton = {
-      NotActive: { opacity: 0, y: 10},
+      NotActive: { opacity: 0, y: 10 },
       Active: {
         opacity: 1,
-        y: 0
-      }
+        y: 0,
+      },
     };
 
     return (
-      
-      <div id="FloorPickerPanel" style={IsbuttonActive ? {position:"relative",top:0, zIndex: -1, display:"block"} : {position:"relative",top:0, zIndex: -1, display:"none"}}>
+      <div
+        id="FloorPickerPanel"
+        style={
+          IsbuttonActive
+            ? { position: "relative", top: 0, zIndex: -1, display: "block" }
+            : { position: "relative", top: 0, zIndex: -1, display: "none" }
+        }
+      >
         <motion.div
           className={style.basicPanel}
-          variants={panel} animate={IsbuttonActive ? "Active" : "NotActive"}
+          variants={panel}
+          animate={IsbuttonActive ? "Active" : "NotActive"}
         >
           {floor.map((data) => {
             if (activeFloor == data.FloorNumber) {
@@ -89,14 +106,14 @@ export default class FloorPicker implements ITool {
                 <div
                   className={style.basicPanelContainer}
                   id={"panelFloor" + data.FloorNumber}
+                  key={"panelFloor" + data.FloorNumber}
                 >
                   <div
                     className={style.ActiveFloorTitle}
-                    key={data.FloorNumber}
                   >
                     {data.FloorNumber}
                   </div>
-                  <div className={style.WallListText} key={data.FloorNumber}>
+                  <div className={style.WallListText}>
                     Lista de Muros:
                   </div>
                   <div className={style.WallListTextButtonContainer}>
@@ -105,12 +122,17 @@ export default class FloorPicker implements ITool {
                         {
                           if (layerName.Id == "walls") {
                             return layerName.CoordsGroup.map((layer) => {
+                              const wallLayer = layer as Wall;
                               return (
                                 <button
                                   className={style.WallListTextButton}
-                                  key={data.FloorNumber}
+                                  key={wallLayer.Id}
+                                  onClick={() => {
+                                    dispatch(changeShowfloorInfo(true))
+                                    wallLayer.WallInfo(dispatch)}
+                                  }
                                 >
-                                  A-{layer.Id}
+                                  A-{wallLayer.Id}
                                 </button>
                               );
                             });
@@ -125,13 +147,15 @@ export default class FloorPicker implements ITool {
         </motion.div>
         <motion.div
           className={style.floorsSidePanel}
-          variants={panelSide} animate={IsbuttonActive ? "Active" : "NotActive"}
+          variants={panelSide}
+          animate={IsbuttonActive ? "Active" : "NotActive"}
         >
           {floor.map((data) => {
             return (
               <motion.button
                 className={style.floorsSidePanelItem}
                 variants={panelSideButton}
+                key={"sidepanel_"+data.FloorNumber}
                 style={
                   activeFloor == data.FloorNumber
                     ? { backgroundColor: "#e4e4e4" }
@@ -152,22 +176,22 @@ export default class FloorPicker implements ITool {
   render(): ReactNode {
     const floorsString = useSelector(selectFloors);
     const activeFloor = useSelector(selectActiveFloor);
-    const activeButton = useSelector(selectActiveButton)
-    const buttonState = useSelector(selectIsbuttonActive)
-    const dispatch = useDispatch()
+    const activeButton = useSelector(selectActiveButton);
+    const buttonState = useSelector(selectIsbuttonActive);
+    const dispatch = useDispatch();
     return (
       <div className={style.toolBarItem} id={this.Id} key={this.Id}>
-        {this.popUp(floorsString,activeButton,buttonState)}
+        {this.popUp(floorsString, activeButton, buttonState)}
         <button
           className={style.toolBarbutton}
           onClick={() => {
-            if(activeButton != this.Id){
-              dispatch(changeActiveButton(this.Id))
-            } 
-            if(buttonState == true){
-              dispatch(changeIsButtonActive(false))
-            } else if(buttonState == false){
-              dispatch(changeIsButtonActive(true))
+            if (activeButton != this.Id) {
+              dispatch(changeActiveButton(this.Id));
+            }
+            if (buttonState == true) {
+              dispatch(changeIsButtonActive(false));
+            } else if (buttonState == false) {
+              dispatch(changeIsButtonActive(true));
             }
           }}
         >

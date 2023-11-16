@@ -10,8 +10,9 @@
 }
 /*  Style for WhiteBoard  */
 .editor {
-  display: block;
+  display: flex;
   position: relative;
+  flex-direction: row;
   font-family: "Product Sans";
   font-size: 13px;
   width: 100vw;
@@ -234,4 +235,69 @@
 /* Optional: Customize the appearance of the scrollbar thumb */
 .basicPanel::-webkit-scrollbar-thumb {
   background-color: transparent;
+}
+
+
+/* Wall info styles */
+
+.WallInfoContainer{
+  width: 380px;
+  height: 260px;
+  background-color: white;
+  position: absolute;
+  right: 40px;
+  border-radius: 5px;
+  top: 0px;
+  bottom: 0px;
+  margin: auto;
+  padding: 15px;
+}
+.WallInfoTitle{
+  color: #000;
+  font-family: "Product Sans";
+  font-size: 32px;
+  width: 150px;
+  border-bottom: #D9D9D9 1px solid;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.WallTable{
+  margin-right: 5px;
+}
+.WallCord{
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5px;
+  color: #000;
+  border-radius: 5px;
+  background: #D9D9D9;
+  font-family: "Product Sans";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.WallBaseTitle{
+  color: #000;
+  font-family: "Product Sans";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.WallBase{
+  width: 80px;
+  height: 30px;
+  margin-top: 5px;
+  border-radius: 5px;
+  background: #D9D9D9;
+  padding-left: 10px;
+  padding-top: 10px;
+}
+.Xicon{
+  fill: pink;
 }
