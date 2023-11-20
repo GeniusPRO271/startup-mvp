@@ -6,13 +6,11 @@ import { RootState } from "../store";
 interface FloorState {
   selectedFloor: string,
   floors: any[];
-  ShowfloorInfo: boolean,
 }
 
 const initialState: FloorState = {
-  selectedFloor: "Story1",
+  selectedFloor: "S1",
   floors: [],
-  ShowfloorInfo: false,
 };
 
 const floorSlice = createSlice({
@@ -47,20 +45,11 @@ const floorSlice = createSlice({
       }
 
     },
-    changeShowfloorInfo : (state, action: PayloadAction<boolean>) => {
-      try{
-        state.ShowfloorInfo = action.payload
-        return state
-      }catch(err){
-        console.log("ERROR AT changeShowfloorInfo: ", err)
-      }
-    }
   },
 });
 
-export const { addFloors, clearFloors,replaceFloors,changeActiveFloor, changeShowfloorInfo} = floorSlice.actions;
+export const { addFloors, clearFloors,replaceFloors,changeActiveFloor} = floorSlice.actions;
 export default floorSlice.reducer;
 
 export const selectFloors = (state: RootState) => state.floorReducer.floors;
 export const selectActiveFloor = (state: RootState) => state.floorReducer.selectedFloor;
-export const selectShowfloorInfo = (state: RootState) => state.floorReducer.ShowfloorInfo;
