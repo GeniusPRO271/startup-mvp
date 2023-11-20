@@ -1,7 +1,7 @@
 import React from "react";
 import Floor from "./Floor";
 import { useDispatch, useSelector } from "react-redux";
-import { addFloors, replaceFloors, selectActiveFloor } from "@/app/redux/slices/floorSlice";
+import { addFloors, replaceFloors, selectActiveFloor } from "@/redux/slices/floorSlice";
 import "@/app/page.module.css"
 
 export default class Building{

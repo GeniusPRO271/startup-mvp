@@ -5,10 +5,9 @@ import { ReactNode } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   changeActiveFloor,
-  changeShowfloorInfo,
   selectActiveFloor,
   selectFloors,
-} from "@/app/redux/slices/floorSlice";
+} from "@/redux/slices/floorSlice";
 import Floor from "../Floor";
 import { motion } from "framer-motion";
 import {
@@ -16,8 +15,10 @@ import {
   changeIsButtonActive,
   selectActiveButton,
   selectIsbuttonActive,
-} from "@/app/redux/slices/buttonSlice";
+} from "@/redux/slices/buttonSlice";
 import { Wall } from "../Layers/Wall";
+import { createRoot } from "react-dom/client";
+import { changeSelectedWall, changeShowWallInfo } from "@/redux/slices/wallSlice";
 
 export default class FloorPicker implements ITool {
   Id: string;
@@ -34,7 +35,6 @@ export default class FloorPicker implements ITool {
 
   private popUp(
     floorsString: any[],
-    activeButton: string,
     IsbuttonActive: boolean
   ): ReactNode {
     const dispatch = useDispatch();
@@ -85,7 +85,7 @@ export default class FloorPicker implements ITool {
         y: 0,
       },
     };
-
+   
     return (
       <div
         id="FloorPickerPanel"
@@ -128,8 +128,9 @@ export default class FloorPicker implements ITool {
                                   className={style.WallListTextButton}
                                   key={wallLayer.Id}
                                   onClick={() => {
-                                    dispatch(changeShowfloorInfo(true))
-                                    wallLayer.WallInfo(dispatch)}
+                                    dispatch(changeSelectedWall(wallLayer.SerializedWall()))
+                                    dispatch(changeShowWallInfo(true))
+                                  }
                                   }
                                 >
                                   A-{wallLayer.Id}
@@ -181,7 +182,7 @@ export default class FloorPicker implements ITool {
     const dispatch = useDispatch();
     return (
       <div className={style.toolBarItem} id={this.Id} key={this.Id}>
-        {this.popUp(floorsString, activeButton, buttonState)}
+        {this.popUp(floorsString, buttonState)}
         <button
           className={style.toolBarbutton}
           onClick={() => {

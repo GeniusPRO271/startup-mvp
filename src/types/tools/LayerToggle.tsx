@@ -4,7 +4,7 @@ import { Dispatch, ReactNode, SetStateAction, useEffect } from "react";
 import style from "@/app/page.module.css";
 import Image from "next/image";
 import { useSelector } from "react-redux";
-import { selectActiveFloor } from "@/app/redux/slices/floorSlice";
+import { selectActiveFloor } from "@/redux/slices/floorSlice";
 
 export default class LayerToggle implements ITool {
   Id: string;

@@ -21,7 +21,7 @@ function WhiteBoardContext() {
 
   // Temporary data for the building , this one is hardcoded 
   const data = {
-      "Story1": {
+      "S1": {
         "slabs": {
           "43": [
             [5.85, 33.95],
@@ -357,7 +357,7 @@ function WhiteBoardContext() {
           }
         }
       },
-      "Story2": {
+      "S2": {
         "slabs": {
           "43": [
             [5.85, 33.95],
@@ -699,7 +699,7 @@ function WhiteBoardContext() {
   return (
     <div
       className={style.canvasBox}
-      style={{ touchAction: "none", overflow: "scroll" }}
+      style={{ touchAction: "none" }}
     >
       <div
         id="canvaId"
