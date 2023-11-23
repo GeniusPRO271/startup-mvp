@@ -1,13 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
 import floorReducer from "./slices/floorSlice"
 import buttonSlice from "./slices/buttonSlice"
-import wallSlice from "./slices/wallSlice"
+import selectionSlice from "./slices/selectionSlice"
 // THIS IS AN EXAMPLE
 export const store = configureStore({
   reducer: {
     floorReducer,
     buttonSlice,
-    wallSlice
+    selectionSlice
   },
 })
 

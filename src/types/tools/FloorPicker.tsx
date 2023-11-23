@@ -18,7 +18,7 @@ import {
 } from "@/redux/slices/buttonSlice";
 import { Wall } from "../Layers/Wall";
 import { createRoot } from "react-dom/client";
-import { changeSelectedWall, changeShowWallInfo } from "@/redux/slices/wallSlice";
+import { changeSelectedJoin, changeSelectedWall, changeShowWallInfo } from "@/redux/slices/selectionSlice";
 
 export default class FloorPicker implements ITool {
   Id: string;
@@ -130,6 +130,9 @@ export default class FloorPicker implements ITool {
                                   onClick={() => {
                                     dispatch(changeSelectedWall(wallLayer.SerializedWall()))
                                     dispatch(changeShowWallInfo(true))
+                                    if(wallLayer.wallJoint.PairOfJoins){
+                                      dispatch(changeSelectedJoin(wallLayer.wallJoint.PairOfJoins[0].SerializedJoin()))
+                                    }
                                   }
                                   }
                                 >
