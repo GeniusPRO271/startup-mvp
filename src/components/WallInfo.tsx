@@ -2,16 +2,19 @@ import { XIcon } from "@/assets/Icons/icon";
 import Image from "next/image";
 import style from "../app/page.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { changeShowWallInfo, selectWall, selectWallSlice } from "@/redux/slices/wallSlice";
+import { changeShowWallInfo, selectSelectionSlice } from "@/redux/slices/selectionSlice";
 import { motion } from "framer-motion";
 import { Wall } from "@/types/Layers/Wall";
+import { Join } from "@/types/Layers/Joints";
 
 function WallInfo() {
   const xIcon = new XIcon();
   const dispatch = useDispatch()
-  const wallSlice = useSelector(selectWallSlice);
+  const wallSlice = useSelector(selectSelectionSlice);
   const wall = wallSlice.wall as Wall;
+  const pivot = wallSlice.join as Join
 
+  console.log("pivote", pivot)
   const popUp = {
     hidden: {
       opacity: 0,
@@ -64,10 +67,10 @@ function WallInfo() {
               <div className={style.WallTable}>
                 <div className={style.WallBaseTitle}>Base</div>
                 <div className={style.WallBase}>
-                  {wall.lineCords[0].toFixed(2)}
+                  {pivot.Id != "" && pivot.Coords[1].toFixed(2)}
                 </div>
                 <div className={style.WallBase}>
-                  {wall.lineCords[1].toFixed(2)}
+                  {pivot.Id != "" && pivot.Coords[0].toFixed(2)}
                 </div>
               </div>
               <div className={style.WallTable}>
