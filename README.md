@@ -30,4 +30,5 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 | 14/11/2023 | **FINALIZACION** Implementacion de redux para selecionar el plano activo + boton para cambiar de piso con UI   **INICIO**  Implementacion para mostrar data de cada muro |
 | 15/11/2023 | **FINALIZACION** Implementacion para mostrar data de cada muro + animaciones y font para texto y Ui en general **INICIO**  Mostar data de muro especifico |
 | 16/11/2023 | **FINALIZACION** Mostar data de muro especifico + Ui y animaciones **INICIO**  Calcular cada una de las columnas para mostrar la info correcta |
+| 20/11/2023 | **FINALIZACION** Arreglo de Bugs y Errores en la Consola + Ahora se puede clicker muro en espefico y motrar su informacion **COMPLETANDO**  Calcular cada una de las columnas para mostrar la info correcta |
 
