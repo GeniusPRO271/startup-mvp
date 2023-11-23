@@ -21,8 +21,14 @@ export default class Walls extends BuildingLayer {
       let coordsGroup: Array<Wall> = [];
       if (rawData.box && rawData.line) {
         for (const coords in rawData.box) {
-          const join = new Joints(coords, rawData.line[coords])
-          let coordsDATA = new Wall(coords, rawData.box[coords], "brown", "brown", join);
+          const join = new Joints(coords, rawData.line[coords]);
+          let coordsDATA = new Wall(
+            coords,
+            rawData.box[coords],
+            "brown",
+            "brown",
+            join,
+          );
           coordsGroup.push(coordsDATA);
         }
       }
@@ -38,7 +44,7 @@ export default class Walls extends BuildingLayer {
         {this.CoordsGroup.map((wall: Wall) => {
           // Render the pair inside a group
           return (
-            <g id={wall.wallOrientation+"_"+ wall.Id} key={wall.Id}>
+            <g id={wall.wallOrientation + "_" + wall.Id} key={wall.Id}>
               {wall.render()}
               {wall.wallJoint.render()}
             </g>
@@ -54,23 +60,23 @@ export class Wall implements ILayer {
   public Color: string;
   public FillColor: string;
   public wallLength: number;
-  public wallOrientation : string;
-  public wallJoint : Joints;
+  public wallOrientation: string;
+  public wallJoint: Joints;
 
   constructor(
     id: string,
     coords: Array<Array<number>>,
     color: string,
     fillColor: string,
-    joint : Joints
+    joint: Joints,
   ) {
     this.Id = id;
     this.Coords = coords;
     this.Color = color;
     this.FillColor = fillColor;
     this.wallLength = this.CalculateWallLength(coords);
-    this.wallJoint = joint
-    this.wallOrientation = joint.getWallOrientation()
+    this.wallJoint = joint;
+    this.wallOrientation = joint.getWallOrientation();
   }
 
   private CalculateWallLength(coord: Array<Array<number>>) {
@@ -83,24 +89,25 @@ export class Wall implements ILayer {
       Color: this.Color,
       FillColor: this.FillColor,
       wallLength: this.wallLength,
-      wallOrientation : this.wallOrientation
+      wallOrientation: this.wallOrientation,
     };
   }
 
   render(): React.ReactNode {
     const dispatch = useDispatch();
-    const handlePolygonClick = (event: React.MouseEvent<SVGPolygonElement, MouseEvent>) => {
-      const polygonPoints = event.currentTarget.getAttribute('points');
+    const handlePolygonClick = (
+      event: React.MouseEvent<SVGPolygonElement, MouseEvent>,
+    ) => {
+      const polygonPoints = event.currentTarget.getAttribute("points");
       if (polygonPoints && this.wallJoint.PairOfJoins) {
         const mouseX = event.clientX;
         const mouseY = event.clientY;
-        console.log("mouseX",mouseX)
-        console.log("mouseY",mouseY)
-        console.log("X cord",this.wallJoint.PairOfJoins[0].Coords[1])
-        console.log("Y cord",this.wallJoint.PairOfJoins[0].Coords[0])
+        console.log("mouseX", mouseX);
+        console.log("mouseY", mouseY);
+        console.log("X cord", this.wallJoint.PairOfJoins[0].Coords[1]);
+        console.log("Y cord", this.wallJoint.PairOfJoins[0].Coords[0]);
         // TESTING
       }
-  
     };
     return (
       <polygon
@@ -109,24 +116,25 @@ export class Wall implements ILayer {
             ${this.Coords[1][0] * 20 + 100},${this.Coords[1][1] * 20} 
             ${this.Coords[2][0] * 20 + 100},${this.Coords[2][1] * 20} 
             ${this.Coords[3][0] * 20 + 100},${this.Coords[3][1] * 20}`}
-            onClick={(event: React.MouseEvent<SVGPolygonElement, MouseEvent>) => {
-              dispatch(changeSelectedWall(this.SerializedWall()));
-              dispatch(changeShowWallInfo(true));
-            
-              if (this.wallJoint.PairOfJoins) {
-                dispatch(changeSelectedJoin(this.wallJoint.PairOfJoins[0].SerializedJoin()));
-              }
-            
-              handlePolygonClick(event);
-            }}
-            
+        onClick={(event: React.MouseEvent<SVGPolygonElement, MouseEvent>) => {
+          dispatch(changeSelectedWall(this.SerializedWall()));
+          dispatch(changeShowWallInfo(true));
+
+          if (this.wallJoint.PairOfJoins) {
+            dispatch(
+              changeSelectedJoin(
+                this.wallJoint.PairOfJoins[0].SerializedJoin(),
+              ),
+            );
+          }
+
+          handlePolygonClick(event);
+        }}
         stroke={this.Color}
         fill={this.FillColor}
         id={"wall_" + this.Id}
         key={"wall_" + this.Id}
-        style={{ position: "absolute", zIndex: 100, 
-        cursor: 'url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'8\' height=\'8\' style=\'fill:%23FF0000;\'><circle cx=\'4\' cy=\'4\' r=\'4\' /></svg>"), auto',
-      }}
+        style={{ position: "absolute", zIndex: 100, cursor: "pointer" }}
       ></polygon>
     );
   }
