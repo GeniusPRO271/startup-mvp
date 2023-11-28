@@ -130,8 +130,8 @@ export default class FloorPicker implements ITool {
                                   onClick={() => {
                                     dispatch(changeSelectedWall(wallLayer.SerializedWall()))
                                     dispatch(changeShowWallInfo(true))
-                                    if(wallLayer.wallJoint.PairOfJoins){
-                                      dispatch(changeSelectedJoin(wallLayer.wallJoint.PairOfJoins[0].SerializedJoin()))
+                                    if(wallLayer.WallJoint.PairOfJoins){
+                                      dispatch(changeSelectedJoin(wallLayer.WallJoint.PairOfJoins[0].SerializedJoin()))
                                     }
                                   }
                                   }
