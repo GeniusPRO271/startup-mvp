@@ -16,9 +16,7 @@ import {
   selectActiveButton,
   selectIsbuttonActive,
 } from "@/redux/slices/buttonSlice";
-import { Wall } from "../Layers/Wall";
-import { createRoot } from "react-dom/client";
-import { changeSelectedJoin, changeSelectedWall, changeShowWallInfo } from "@/redux/slices/selectionSlice";
+import Building from "../Building";
 
 export default class FloorPicker implements ITool {
   Id: string;
@@ -39,17 +37,10 @@ export default class FloorPicker implements ITool {
   ): ReactNode {
     const dispatch = useDispatch();
     const activeFloor = useSelector(selectActiveFloor);
-    const floors = floorsString.map((floor) => {
-      return JSON.parse(floor);
-    });
-    let floor: Array<Floor> = [];
-    for (const key in floors) {
-      for (const story in floors[key]) {
-        let newFloor = new Floor(key, floors[key][story], story);
-        floor.push(newFloor);
-      }
-    }
-
+    const floors = useSelector(selectFloors)
+    const floorNames = Building.getFloorNames(floors)
+    const wallNames = Building.getFloorWalls(floors)
+    console.log("FLOOR_PCIKER_FLOOR_NAMES=", floorNames)
     const panel = {
       NotActive: {
         opacity: 0,
@@ -100,47 +91,48 @@ export default class FloorPicker implements ITool {
           variants={panel}
           animate={IsbuttonActive ? "Active" : "NotActive"}
         >
-          {floor.map((data) => {
-            if (activeFloor == data.FloorNumber) {
+          {floorNames.map((FLOOR_NUM) => {
+            console.log("FLOOR_NUM=")
+            if (activeFloor == FLOOR_NUM) {
               return (
                 <div
                   className={style.basicPanelContainer}
-                  id={"panelFloor" + data.FloorNumber}
-                  key={"panelFloor" + data.FloorNumber}
+                  id={"FLOOR_PANEL" + FLOOR_NUM}
+                  key={"FLOOR_PANEL" + FLOOR_NUM}
                 >
                   <div
                     className={style.ActiveFloorTitle}
                   >
-                    {data.FloorNumber}
+                    {FLOOR_NUM}
                   </div>
                   <div className={style.WallListText}>
                     Lista de Muros:
                   </div>
                   <div className={style.WallListTextButtonContainer}>
-                    {data.Layers &&
-                      data.Layers.map((layerName) => {
+                    {wallNames &&
+                      wallNames.map((FLOOR_DATA) => {
                         {
-                          if (layerName.Id == "walls") {
-                            return layerName.CoordsGroup.map((layer) => {
-                              const wallLayer = layer as Wall;
-                              return (
-                                <button
-                                  className={style.WallListTextButton}
-                                  key={wallLayer.Id}
-                                  onClick={() => {
-                                    dispatch(changeSelectedWall(wallLayer.SerializedWall()))
-                                    dispatch(changeShowWallInfo(true))
-                                    if(wallLayer.wallJoint.PairOfJoins){
-                                      dispatch(changeSelectedJoin(wallLayer.wallJoint.PairOfJoins[0].SerializedJoin()))
-                                    }
-                                  }
-                                  }
-                                >
-                                  A-{wallLayer.Id}
-                                </button>
-                              );
-                            });
-                          }
+                          return FLOOR_DATA[FLOOR_NUM] && FLOOR_DATA[FLOOR_NUM].walls.map((WALL_NUMBER) => {
+                            return (
+                              <button
+                                className={style.WallListTextButton}
+                                key={"FLOOR_PICKER-"+WALL_NUMBER}
+                                // onClick={() => {
+                                //   dispatch(changeSelectedWall(wallLayer.SerializedWall()))
+                                //   dispatch(changeShowWallInfo(true))
+                                //   if(wallLayer.wallJoint.PairOfJoins){
+                                //     dispatch(changeSelectedJoin(wallLayer.wallJoint.PairOfJoins[0].SerializedJoin()))
+                                //   }
+                                // }
+                                // }
+                                  >
+                                    A-{WALL_NUMBER}
+                                  </button>
+                            );
+                          })
+                          
+
+                          
                         }
                       })}
                   </div>
@@ -154,22 +146,22 @@ export default class FloorPicker implements ITool {
           variants={panelSide}
           animate={IsbuttonActive ? "Active" : "NotActive"}
         >
-          {floor.map((data) => {
+          {floorNames.map((FLOOR_NUM) => {
             return (
               <motion.button
                 className={style.floorsSidePanelItem}
                 variants={panelSideButton}
-                key={"sidepanel_"+data.FloorNumber}
+                key={"SIDE_PANEL-"+ FLOOR_NUM}
                 style={
-                  activeFloor == data.FloorNumber
+                  activeFloor == FLOOR_NUM
                     ? { backgroundColor: "#e4e4e4" }
                     : {}
                 }
                 onClick={() => {
-                  dispatch(changeActiveFloor(data.FloorNumber));
+                  dispatch(changeActiveFloor(FLOOR_NUM));
                 }}
               >
-                {data.FloorNumber}
+                {FLOOR_NUM}
               </motion.button>
             );
           })}

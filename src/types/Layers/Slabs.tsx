@@ -1,5 +1,5 @@
 import React from "react";
-import BuildingLayer from "../BuildingLayer";
+import BuildingLayer from "./BuildingLayer";
 
 export default class Slabs extends BuildingLayer {
   public CoordsGroup: Array<Slab>;
@@ -61,10 +61,10 @@ class Slab implements ILayer {
     return (
       <polygon
         points={`
-        ${(this.Coords[0][0] * 20) + 100},${this.Coords[0][1] * 20} 
-        ${(this.Coords[1][0] * 20) + 100},${this.Coords[1][1] * 20} 
-        ${(this.Coords[2][0] * 20) + 100},${this.Coords[2][1] * 20} 
-        ${(this.Coords[3][0] * 20) + 100},${this.Coords[3][1] * 20}`}
+        ${(this.Coords[0][0] * 20) + 200},${this.Coords[0][1] * 20} 
+        ${(this.Coords[1][0] * 20) + 200},${this.Coords[1][1] * 20} 
+        ${(this.Coords[2][0] * 20) + 200},${this.Coords[2][1] * 20} 
+        ${(this.Coords[3][0] * 20) + 200},${this.Coords[3][1] * 20}`}
         stroke={this.Color}
         fill={this.FillColor}
         id={this.Id}

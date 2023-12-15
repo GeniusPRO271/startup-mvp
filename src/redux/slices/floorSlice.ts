@@ -5,12 +5,12 @@ import { RootState } from "../store";
 
 interface FloorState {
   selectedFloor: string,
-  floors: any[];
+  floors: any;
 }
 
 const initialState: FloorState = {
-  selectedFloor: "S1",
-  floors: [],
+  selectedFloor: "story1",
+  floors: "",
 };
 
 const floorSlice = createSlice({

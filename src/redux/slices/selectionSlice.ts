@@ -3,84 +3,159 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 
-interface WallSerialized{
-    Coords: Array<Array<number>>;
-    Id: string;
-    Color: string;
-    FillColor: string;
-    wallLength: number;
-    wallOrientation : string
+export interface WallSerialized {
+  Coords: Array<Array<number>>;
+  Id: string;
+  Color: string;
+  FillColor: string;
+  WallEndPoints: WallEndPointsSerialized;
 }
 
-interface JoinSerialized{
-    Coords: Array<number>
-    Id:string
-    Orientation: string
-    Color: string
-    FillColor: string
+interface WallEndPointsSerialized {
+  Coords: Array<Array<number>>;
+  Id: string;
+  PairOfJoins: Array<WallEndPointSerialized>;
+  WallEndPointsRestrictions: any;
+  WallEndPointsIds: Array<string>;
+}
+interface WallEndPointSerialized {
+  Coords: Array<number>;
+  Id: string;
+  Orientation: string;
+  Color: string;
+  FillColor: string;
+  Infimo: number[];
+  Supremo: number[];
+  MaxLimit: number;
+  MinLimit: number;
 }
 
-interface selectedState{
-    wall: WallSerialized
-    join : JoinSerialized
-    showWallInfo : boolean
-    id :string
+interface selectedState {
+  wall: WallSerialized;
+  join: WallEndPointSerialized;
+  showWallInfo: boolean;
+  deleted: WallSerialized[];
 }
-
-
-
 
 const initialState: selectedState = {
-    wall: {
-        Coords: [[]],
-        Id: "",
-        Color: "",
-        FillColor: "",
-        wallLength: 0,
-        wallOrientation : "",
+  wall: {
+    Coords: [[]],
+    Id: "",
+    Color: "",
+    FillColor: "",
+    WallEndPoints: {
+      Coords: [],
+      Id: "",
+      PairOfJoins: [
+        {
+          Coords: [],
+          Id: "",
+          Orientation: "",
+          Color: "",
+          FillColor: "",
+          Infimo: [0, 0],
+          Supremo: [0, 0],
+          MaxLimit: 0,
+          MinLimit: 0,
+        },
+      ],
+      WallEndPointsIds: ["0", "0"],
+      WallEndPointsRestrictions: "",
     },
-    join:{
-        Coords: [],
-        Id: "",
-        Orientation: "",
-        Color: "",
-        FillColor: ""
-    },
-    showWallInfo: false,
-    id : ""
+  },
+  join: {
+    Coords: [],
+    Id: "",
+    Orientation: "",
+    Color: "",
+    FillColor: "",
+    Infimo: [0, 0],
+    Supremo: [0, 0],
+    MaxLimit: 0,
+    MinLimit: 0,
+  },
+  showWallInfo: false,
+  deleted: [],
 };
 
 const selectionSlice = createSlice({
   name: "selectionSlice",
   initialState,
   reducers: {
-    changeSelectedWall :(state, action: PayloadAction<WallSerialized>) => {
-        state.wall = action.payload
-        state.id = action.payload.Id
-        return state
+    UPDATE_SELECTED_WALL: (state, action: PayloadAction<WallSerialized>) => {
+      state.wall = action.payload;
+      return state;
     },
-    changeShowWallInfo :(state, action: PayloadAction<boolean>) => {
-        state.showWallInfo = action.payload
-        return state
+    UPDATE_SHOW_WALL_INFO_TOGGLE: (state, action: PayloadAction<boolean>) => {
+      state.showWallInfo = action.payload;
+      return state;
     },
-    changeSelectedJoin :(state, action: PayloadAction<JoinSerialized>) => {
-        state.join = action.payload
-        state.id = action.payload.Id
-        return state
+    UPDATE_SELECTED_WALL_END_POINT: (
+      state,
+      action: PayloadAction<WallEndPointSerialized>
+    ) => {
+      state.join = action.payload;
+      return state;
     },
-    clearSelectedState :(state, action: PayloadAction<boolean>) => {
-        state = initialState
-        return state
-    }
+    UPDATE_WALL_END_POINT_INFIMO: (state, action: PayloadAction<number[]>) => {
+      const indexOfJoin = state.wall.WallEndPoints.PairOfJoins.findIndex(
+        (d) => d.Id === state.join.Id
+      );
+
+      if (indexOfJoin !== -1) {
+        state.wall.WallEndPoints.PairOfJoins[indexOfJoin].Infimo =
+          action.payload;
+      }
+
+      state.join.Infimo = action.payload;
+      return state;
+    },
+    UPDATE_WALL_END_POINT_SUPREMO: (state, action: PayloadAction<number[]>) => {
+      const indexOfJoin = state.wall.WallEndPoints.PairOfJoins.findIndex(
+        (d) => d.Id === state.join.Id
+      );
+
+      if (indexOfJoin !== -1) {
+        state.wall.WallEndPoints.PairOfJoins[indexOfJoin].Supremo =
+          action.payload;
+      }
+
+      state.join.Supremo = action.payload;
+      return state;
+    },
+    ADD_WALL_TO_DELETED_LIST: (state, action: PayloadAction<WallSerialized>) => {
+      state.deleted.push(action.payload);
+      return state;
+    },
+    REMOVE_WALL_FROM_DELETED_LIST: (state, action: PayloadAction<WallSerialized>) => {
+        let DELETE_ARRAY = state.deleted
+        console.log("STATE_BEFORE_DELTED=", DELETE_ARRAY)
+        state.deleted = state.deleted.filter(item => item.Id !== action.payload.Id)
+        console.log("STATE_AFTER_DELTED=", DELETE_ARRAY)
+        return state;
+      },
+    DELETE_ALL_STATES: (state) => {
+      state = initialState;
+      return state;
+    },
   },
 });
 
-export const { changeSelectedWall, changeShowWallInfo,changeSelectedJoin,clearSelectedState} = selectionSlice.actions;
+export const {
+  UPDATE_SELECTED_WALL,
+  UPDATE_SHOW_WALL_INFO_TOGGLE,
+  UPDATE_SELECTED_WALL_END_POINT,
+  UPDATE_WALL_END_POINT_INFIMO,
+  UPDATE_WALL_END_POINT_SUPREMO,
+  DELETE_ALL_STATES,
+  ADD_WALL_TO_DELETED_LIST,
+  REMOVE_WALL_FROM_DELETED_LIST,
+} = selectionSlice.actions;
 export default selectionSlice.reducer;
 
-export const selectWall = (state: RootState) => state.selectionSlice.wall;
-export const selectShowWallInfo = (state: RootState) => state.selectionSlice.showWallInfo;
-export const selectJoin = (state: RootState) => state.selectionSlice.join;
-export const selectSelectionSlice = (state: RootState) => state.selectionSlice;
-
-
+export const GET_SELECTED_WALL = (state: RootState) => state.selectionSlice.wall;
+export const GET_SHOW_WALL_INFO_BOOL = (state: RootState) =>
+  state.selectionSlice.showWallInfo;
+export const GET_SELECTED_WALL_END_POINT = (state: RootState) => state.selectionSlice.join;
+export const GET_ALL_DATA = (state: RootState) => state.selectionSlice;
+export const GET_DELTED_LIST =  (state: RootState) => state.selectionSlice.deleted;
