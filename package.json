@@ -3,13 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev ",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.7",
+    "@vercel/speed-insights": "^1.0.2",
     "framer-motion": "^10.16.5",
     "next": "14.0.1",
     "react": "^18",
