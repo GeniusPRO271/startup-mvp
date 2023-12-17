@@ -4,6 +4,9 @@ import style from "@/app/page.module.css";
 import PlaneContext from "./PlaneContext";
 import Building from "@/types/Building";
 import Plane from "@/types/Plane";
+import { useDispatch, useSelector } from "react-redux";
+import { GET_ZOOM_SCALE, GET_ZOOM_STATE, UPDATE_ZOOM_HEIGHT, UPDATE_ZOOM_HEIGHT_PERC, UPDATE_ZOOM_SCALE, UPDATE_ZOOM_WIDTH, UPDATE_ZOOM_WIDTH_PERC } from "@/redux/slices/zoomSlice";
+import Zoom from "./Zoom";
 
 // Interface of whiteboard in the future should be a class with mothods
 interface WhiteBoard {
@@ -13,12 +16,7 @@ interface WhiteBoard {
 }
 
 function WhiteBoardContext() {
-  const [height, setHeight] = useState(85400);
-  const [width, setWidth] = useState(91800);
-  const [heightPerc, setHeightPerc] = useState(100);
-  const [widthPerc, setWidthPerc] = useState(100);
-  const [scale, setScale] = useState<boolean>(false);
-
+  const dispatch = useDispatch()
   // Temporary data for the building , this one is hardcoded 
   const data = {
     "story1": {
@@ -3946,7 +3944,9 @@ function WhiteBoardContext() {
   };
   // -------------------
 
+
   return (
+    <>
     <div
       className={style.canvasBox}
       style={{ touchAction: "none" }}
@@ -3955,18 +3955,19 @@ function WhiteBoardContext() {
         id="canvaId"
         className={style.canvas}
         style={{
-          width: width,
-          minWidth: width,
-          height: height,
-          minHeight: height,
+          width: 85400,
+          minWidth: 85400,
+          height: 91800,
+          minHeight: 91800,
         }}
       >
         <div
           className={style.layer_wrapper}
+          id="layer_wrapper"
           style={{
-            transform: `scale(${scale})`,
-            height: `${heightPerc}%`,
-            width: `${widthPerc}%`,
+            transform: `scale(${1})`,
+            height: `${100 / 1}%`,
+            width: `${100/ 1}%`,
           }}
         >
           <div className={style.canvas_grid} />
@@ -3974,6 +3975,8 @@ function WhiteBoardContext() {
         </div>
       </div>
     </div>
+    </>
+    
   );
 }
 

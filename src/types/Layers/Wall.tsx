@@ -4,6 +4,7 @@ import { WallEndPoints } from "./WallEndPoint";
 import { useDispatch, useSelector } from "react-redux";
 import {
   GET_DELTED_LIST,
+  GET_SELECTED_WALL,
   UPDATE_SELECTED_WALL,
   UPDATE_SELECTED_WALL_END_POINT,
   UPDATE_SHOW_WALL_INFO_TOGGLE,
@@ -38,20 +39,15 @@ export default class Walls extends BuildingLayer {
             "=",
             this.WallEndPointsRestrictions[INDEX]
           );
-          console.log("INDEX_AT_WALL=", INDEX);
-          const WALL_END_POINT = new WallEndPoints(
-            rawData.line[INDEX],
-            rawData.line[INDEX].coords,
-            rawData.line[INDEX].joints,
-            this.WallEndPointsRestrictions[INDEX]
-          );
-          let NEW_WALL_TO_PUSH = Wall.getWallOrientation(
+          console.log("RAW_DATA_WIDTH=",  rawData.box[INDEX][0][0], rawData.box[INDEX][2][0] );
+          const NEW_WALL_TO_PUSH = Wall.getWallOrientation(
             rawData.line[INDEX].coords,
             INDEX,
             rawData.box[INDEX],
             "rgb(148,148,148)",
             "rgb(55,68,97)",
-            WALL_END_POINT
+            rawData,
+            this.WallEndPointsRestrictions
           );
           coordsGroup.push(NEW_WALL_TO_PUSH);
         }
@@ -115,12 +111,36 @@ export class Wall {
     coords: Array<Array<number>>,
     color: string,
     fillColor: string,
-    wallEndPoints: WallEndPoints
+    rawData: any,
+    wallRestrictions : any
   ): Wall {
+
+
     if (Coords[0][0] == Coords[1][0]) {
-      return new VerticalWall(id, coords, color, fillColor, wallEndPoints);
+      const WALL_WIDTH = [coords[0][0],coords[2][0]]
+    
+      const WALL_END_POINT = new WallEndPoints(
+        rawData.line[id],
+        rawData.line[id].coords,
+        rawData.line[id].joints,
+        wallRestrictions[id],
+        WALL_WIDTH
+      );
+
+      return new VerticalWall(id, coords, color, fillColor, WALL_END_POINT);
     } else {
-      return new HorizontalWall(id, coords, color, fillColor, wallEndPoints);
+
+      const WALL_WIDTH = [coords[0][1],coords[2][1]]
+    
+      const WALL_END_POINT = new WallEndPoints(
+        rawData.line[id],
+        rawData.line[id].coords,
+        rawData.line[id].joints,
+        wallRestrictions[id],
+        WALL_WIDTH
+      );
+
+      return new HorizontalWall(id, coords, color, fillColor, WALL_END_POINT);
     }
   }
 
@@ -132,6 +152,7 @@ export class Wall {
 class VerticalWall extends Wall {
   getWallWith(): Array<number> {
     try {
+      
       let X1 = this.Coords[0][0];
       let X2 = this.Coords[2][0];
       return [X1, X2];
@@ -146,6 +167,7 @@ class VerticalWall extends Wall {
     const isDeleted = useSelector(GET_DELTED_LIST).some(
       (d) => d.Id === this.Id
     );
+    const isSelected = useSelector(GET_SELECTED_WALL).Id == this.Id
    
     const deletedColorStroke = "rgb(252,96,101)";
     const deletedColorFill = "rgb(251,0, 17)";
@@ -169,14 +191,13 @@ class VerticalWall extends Wall {
           }
         }}
         stroke={isDeleted ? deletedColorStroke : this.Color}
-        fill={isDeleted ? deletedColorFill : this.FillColor}
+        fill={isDeleted ? deletedColorFill : (isSelected ? "rgb(148,148,148)" : this.FillColor)}
         id={"VERTICAL_WALL-" + this.Id}
         key={"VERTICAL_WALL-" + this.Id}
         style={{
           position: "absolute",
           zIndex: 100,
-          cursor:
-            "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='8' height='8' style='fill:%23FF0000;'><circle cx='4' cy='4' r='4' /></svg>\"), auto",
+          cursor: "pointer"
         }}
       ></polygon>
     );
@@ -218,8 +239,7 @@ class HorizontalWall extends Wall {
         style={{
           position: "absolute",
           zIndex: 100,
-          cursor:
-            "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='8' height='8' style='fill:%23FF0000;'><circle cx='4' cy='4' r='4' /></svg>\"), auto",
+          cursor: "pointer"
         }}
       ></polygon>
     );

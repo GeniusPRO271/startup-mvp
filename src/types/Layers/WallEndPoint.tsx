@@ -6,6 +6,7 @@ import {
   UPDATE_WALL_END_POINT_SUPREMO,
   WallSerialized,
 } from "@/redux/slices/selectionSlice";
+import { GET_ZOOM_SCALE } from "@/redux/slices/zoomSlice";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -19,7 +20,8 @@ export class WallEndPoints {
     id: string,
     coords: Array<Array<number>>,
     wallEndPointsIds: Array<string>,
-    wallEndPointsRestrictions: any
+    wallEndPointsRestrictions: any,
+    wallWidth: Array<number>
   ) {
     this.Id = id;
     this.Coords = coords;
@@ -28,7 +30,8 @@ export class WallEndPoints {
     this.PairOfWallEndPoints = this.getPairOfJoins(
       coords,
       wallEndPointsIds,
-      wallEndPointsRestrictions.joints
+      wallEndPointsRestrictions.joints,
+      wallWidth
     );
   }
 
@@ -41,17 +44,19 @@ export class WallEndPoints {
       }),
       WallEndPointsIds: this.WallEndPointsIds,
       WallEndPointsRestrictions: this.WallEndPointsRestrictions,
+      
     };
   }
 
   getPairOfJoins(
     coords: Array<Array<number>>,
     WALL_END_POINT_IDS: Array<string>,
-    WALL_END_POINT_RESTRICTIONS: any
+    WALL_END_POINT_RESTRICTIONS: any,
+    WALL_END_POINT_WALL_WIDTH: Array<number>
   ) {
     console.log(
-      "WALL_END_POINT_RESTRICTIONS[WALL_END_POINT_IDS[1]][alargar]=",
-      WALL_END_POINT_RESTRICTIONS[WALL_END_POINT_IDS[1]]["alargar"]
+      "WALL_END_POINT_WALL_WIDTH=",
+      WALL_END_POINT_WALL_WIDTH
     );
     const orientation = this.getWallOrientationWithCoords(coords);
     let Join0;
@@ -68,7 +73,9 @@ export class WallEndPoints {
           [0, 0],
           [0, 0],
           WALL_END_POINT_RESTRICTIONS[WALL_END_POINT_IDS[1]]["alargar"],
-          WALL_END_POINT_RESTRICTIONS[WALL_END_POINT_IDS[1]]["acortar"]
+          WALL_END_POINT_RESTRICTIONS[WALL_END_POINT_IDS[1]]["acortar"],
+          WALL_END_POINT_WALL_WIDTH
+          
         );
         Join0 = new BottomEndPoint(
           WALL_END_POINT_IDS[0],
@@ -79,7 +86,9 @@ export class WallEndPoints {
           [0, 0],
           [0, 0],
           WALL_END_POINT_RESTRICTIONS[WALL_END_POINT_IDS[0]]["alargar"],
-          WALL_END_POINT_RESTRICTIONS[WALL_END_POINT_IDS[0]]["acortar"]
+          WALL_END_POINT_RESTRICTIONS[WALL_END_POINT_IDS[0]]["acortar"],
+          WALL_END_POINT_WALL_WIDTH
+          
         );
       } else {
         Join0 = new TopEndPoint(
@@ -91,7 +100,8 @@ export class WallEndPoints {
           [0, 0],
           [0, 0],
           WALL_END_POINT_RESTRICTIONS[WALL_END_POINT_IDS[0]]["alargar"],
-          WALL_END_POINT_RESTRICTIONS[WALL_END_POINT_IDS[0]]["acortar"]
+          WALL_END_POINT_RESTRICTIONS[WALL_END_POINT_IDS[0]]["acortar"],
+          WALL_END_POINT_WALL_WIDTH
         );
         Join1 = new BottomEndPoint(
           WALL_END_POINT_IDS[1],
@@ -102,7 +112,8 @@ export class WallEndPoints {
           [0, 0],
           [0, 0],
           WALL_END_POINT_RESTRICTIONS[WALL_END_POINT_IDS[1]]["alargar"],
-          WALL_END_POINT_RESTRICTIONS[WALL_END_POINT_IDS[1]]["acortar"]
+          WALL_END_POINT_RESTRICTIONS[WALL_END_POINT_IDS[1]]["acortar"],
+          WALL_END_POINT_WALL_WIDTH
         );
       }
     } else {
@@ -116,7 +127,8 @@ export class WallEndPoints {
           [0, 0],
           [0, 0],
           WALL_END_POINT_RESTRICTIONS[WALL_END_POINT_IDS[0]]["alargar"],
-          WALL_END_POINT_RESTRICTIONS[WALL_END_POINT_IDS[0]]["acortar"]
+          WALL_END_POINT_RESTRICTIONS[WALL_END_POINT_IDS[0]]["acortar"],
+          WALL_END_POINT_WALL_WIDTH
         );
         Join1 = new LeftEndPoint(
           WALL_END_POINT_IDS[1],
@@ -127,7 +139,8 @@ export class WallEndPoints {
           [0, 0],
           [0, 0],
           WALL_END_POINT_RESTRICTIONS[WALL_END_POINT_IDS[1]]["alargar"],
-          WALL_END_POINT_RESTRICTIONS[WALL_END_POINT_IDS[1]]["acortar"]
+          WALL_END_POINT_RESTRICTIONS[WALL_END_POINT_IDS[1]]["acortar"],
+          WALL_END_POINT_WALL_WIDTH
         );
       } else {
         Join1 = new RightEndPoint(
@@ -139,7 +152,8 @@ export class WallEndPoints {
           [0, 0],
           [0, 0],
           WALL_END_POINT_RESTRICTIONS[WALL_END_POINT_IDS[1]]["alargar"],
-          WALL_END_POINT_RESTRICTIONS[WALL_END_POINT_IDS[1]]["acortar"]
+          WALL_END_POINT_RESTRICTIONS[WALL_END_POINT_IDS[1]]["acortar"],
+          WALL_END_POINT_WALL_WIDTH
         );
         Join0 = new LeftEndPoint(
           WALL_END_POINT_IDS[0],
@@ -150,7 +164,8 @@ export class WallEndPoints {
           [0, 0],
           [0, 0],
           WALL_END_POINT_RESTRICTIONS[WALL_END_POINT_IDS[0]]["alargar"],
-          WALL_END_POINT_RESTRICTIONS[WALL_END_POINT_IDS[0]]["acortar"]
+          WALL_END_POINT_RESTRICTIONS[WALL_END_POINT_IDS[0]]["acortar"],
+          WALL_END_POINT_WALL_WIDTH
         );
       }
     }
@@ -187,6 +202,7 @@ export class WallEndPoint {
   public MinLimit: number;
   public Infimo: Array<number>;
   public Supremo: Array<number>;
+  public WallWidth: Array<number>
 
   constructor(
     id: string,
@@ -197,7 +213,8 @@ export class WallEndPoint {
     infimo: Array<number>,
     supremo: Array<number>,
     maxLimit: number,
-    minLimit: number
+    minLimit: number,
+    wallWidth: Array<number>
   ) {
     this.Id = id;
     this.Coords = coords;
@@ -208,6 +225,7 @@ export class WallEndPoint {
     this.Supremo = supremo;
     this.MaxLimit = maxLimit;
     this.MinLimit = minLimit;
+    this.WallWidth = wallWidth
   }
 
   SerializedWallEndPoint() {
@@ -221,6 +239,7 @@ export class WallEndPoint {
       Supremo: this.Supremo,
       MaxLimit: this.MaxLimit,
       MinLimit: this.MinLimit,
+      WallWidth : this.WallWidth
     };
   }
 
@@ -275,6 +294,7 @@ class TopEndPoint extends WallEndPoint {
 
   render(): React.ReactNode {
     const dispatch = useDispatch();
+    const zoomScale = useSelector(GET_ZOOM_SCALE)
     const ThisWall = useSelector(GET_SELECTED_WALL);
 
     const [infimoCoord, setInfimoCoords] = useState([
@@ -289,7 +309,6 @@ class TopEndPoint extends WallEndPoint {
 
     const selectedState = useSelector(GET_SELECTED_WALL);
     const selectedWallEndPoint = useSelector(GET_SELECTED_WALL_END_POINT);
-    const wallWith = ThisWall.Id != "" ? this.getWallWith(ThisWall) : [0,0];
 
     let isWall = selectedState.WallEndPoints.WallEndPointsIds.includes(this.Id);
 
@@ -300,7 +319,7 @@ class TopEndPoint extends WallEndPoint {
         .getElementById("plane_container")
         ?.getBoundingClientRect();
       if (container) {
-        const coordY = event.clientY - container.y;
+        const coordY = (event.clientY - container.y) / zoomScale;
 
         let distance = 0;
         let X = this.Coords[0];
@@ -318,7 +337,7 @@ class TopEndPoint extends WallEndPoint {
         .getElementById("plane_container")
         ?.getBoundingClientRect();
       if (container) {
-        const coordY = event.clientY - container.y;
+        const coordY = (event.clientY - container.y) / zoomScale;
 
         let X = 0,
           Y = 0;
@@ -376,6 +395,7 @@ class TopEndPoint extends WallEndPoint {
       }
     };
 
+
     return (
       (this.MaxLimit != 0 && this.MinLimit != 0 && <>
         <circle
@@ -409,7 +429,7 @@ class TopEndPoint extends WallEndPoint {
             position: "absolute",
             zIndex: 1000,
             cursor: "s-resize",
-            display: isSelected ? "block" : "none",
+            display: "block"
           }}
         />
         <circle
@@ -425,15 +445,15 @@ class TopEndPoint extends WallEndPoint {
             position: "absolute",
             zIndex: 1000,
             cursor: "n-resize",
-            display: isSelected ? "block" : "none",
+            display: "block"
           }}
         />
         <polygon
           points={`
-                ${wallWith[0] * 20 + 200},${infimoCoord[1] * 20} 
-                ${wallWith[1] * 20 + 200},${infimoCoord[1] * 20} 
-                ${wallWith[1] * 20 + 200},${supremoCoord[1] * 20} 
-                ${wallWith[0] * 20 + 200},${supremoCoord[1] * 20}`}
+                ${this.WallWidth[0] * 20 + 200},${infimoCoord[1] * 20} 
+                ${this.WallWidth[1] * 20 + 200},${infimoCoord[1] * 20} 
+                ${this.WallWidth[1] * 20 + 200},${supremoCoord[1] * 20} 
+                ${this.WallWidth[0] * 20 + 200},${supremoCoord[1] * 20}`}
                 stroke={"rgb(60,98,186)"}
           fill="rgb(138,164,217,0.5)"
           id={"UNDEFINED_ID-" + this.Id}
@@ -441,7 +461,7 @@ class TopEndPoint extends WallEndPoint {
           style={{
             position: "relative",
             zIndex: 10,
-            display: isSelected ? "block" : "none",
+            display:  "block",
           }}
         ></polygon>
       </>)
@@ -486,6 +506,7 @@ class BottomEndPoint extends WallEndPoint {
 
   render(): React.ReactNode {
     const dispatch = useDispatch();
+    const zoomScale = useSelector(GET_ZOOM_SCALE)
     const ThisWall = useSelector(GET_SELECTED_WALL);
 
     const [infimoCoord, setInfimoCoords] = useState([
@@ -511,7 +532,7 @@ class BottomEndPoint extends WallEndPoint {
         .getElementById("plane_container")
         ?.getBoundingClientRect();
       if (container) {
-        const coordY = event.clientY - container.y;
+        const coordY = (event.clientY - container.y) / zoomScale;
 
         let distance = 0;
         let X = this.Coords[0];
@@ -529,7 +550,7 @@ class BottomEndPoint extends WallEndPoint {
         .getElementById("plane_container")
         ?.getBoundingClientRect();
       if (container) {
-        const coordY = event.clientY - container.y;
+        const coordY = (event.clientY - container.y) / zoomScale;
 
         let X = 0,
           Y = 0;
@@ -616,7 +637,7 @@ class BottomEndPoint extends WallEndPoint {
             position: "absolute",
             zIndex: 1000,
             cursor: "n-resize",
-            display: isSelected ? "block" : "none",
+            display: "block",
           }}
         />
         <circle
@@ -632,15 +653,15 @@ class BottomEndPoint extends WallEndPoint {
             position: "absolute",
             zIndex: 1000,
             cursor: "s-resize",
-            display: isSelected ? "block" : "none",
+            display: "block" ,
           }}
         />
         <polygon
           points={`
-                ${wallWith[0] * 20 + 200},${infimoCoord[1] * 20} 
-                ${wallWith[1] * 20 + 200},${infimoCoord[1] * 20} 
-                ${wallWith[1] * 20 + 200},${supremoCoord[1] * 20} 
-                ${wallWith[0] * 20 + 200},${supremoCoord[1] * 20}`}
+          ${this.WallWidth[0] * 20 + 200},${infimoCoord[1] * 20} 
+          ${this.WallWidth[1] * 20 + 200},${infimoCoord[1] * 20} 
+          ${this.WallWidth[1] * 20 + 200},${supremoCoord[1] * 20} 
+          ${this.WallWidth[0] * 20 + 200},${supremoCoord[1] * 20}`}
                 stroke={"rgb(60,98,186)"}
                 fill="rgb(138,164,217,0.5)"
           id={"UNDEFINED_ID-" + this.Id}
@@ -648,7 +669,7 @@ class BottomEndPoint extends WallEndPoint {
           style={{
             position: "relative",
             zIndex: 10,
-            display: isSelected ? "block" : "none",
+            display: "block",
           }}
         ></polygon>
       </>)
@@ -692,6 +713,7 @@ class RightEndPoint extends WallEndPoint {
 
   render(): React.ReactNode {
     const dispatch = useDispatch();
+    const zoomScale = useSelector(GET_ZOOM_SCALE)
     const ThisWall = useSelector(GET_SELECTED_WALL);
 
     const [infimoCoord, setInfimoCoords] = useState([
@@ -718,7 +740,7 @@ class RightEndPoint extends WallEndPoint {
         .getElementById("plane_container")
         ?.getBoundingClientRect();
       if (container) {
-        const coordX = event.clientX - container.x;
+        const coordX = (event.clientX - container.x) / zoomScale;
 
         let distance = 0;
         let X = (coordX - 200) / 20;
@@ -736,7 +758,7 @@ class RightEndPoint extends WallEndPoint {
         .getElementById("plane_container")
         ?.getBoundingClientRect();
       if (container) {
-        const coordX = event.clientX - container.x;
+        const coordX = (event.clientX - container.x) / zoomScale;
 
         let distance = 0;
         let X = (coordX - 200) / 20;
@@ -789,6 +811,7 @@ class RightEndPoint extends WallEndPoint {
       }
     };
 
+
     return (
  (  this.MaxLimit != 0 && this.MinLimit != 0 && <>
         <circle
@@ -822,7 +845,7 @@ class RightEndPoint extends WallEndPoint {
             position: "absolute",
             zIndex: 1000,
             cursor: "w-resize",
-            display: isSelected ? "block" : "none",
+            display: "block"
           }}
         />
         <circle
@@ -838,16 +861,16 @@ class RightEndPoint extends WallEndPoint {
             position: "absolute",
             zIndex: 1000,
             cursor: "e-resize",
-            display: isSelected ? "block" : "none",
+            display: "block"
           }}
         />
         
         <polygon
           points={`
-          ${infimoCoord[0] * 20 + 200},${wallWith[0] * 20} 
-          ${infimoCoord[0] * 20 + 200},${wallWith[1] * 20} 
-          ${supremoCoord[0] * 20 + 200},${wallWith[1] * 20} 
-          ${supremoCoord[0] * 20 + 200},${wallWith[0] * 20}`}
+          ${infimoCoord[0] * 20 + 200},${this.WallWidth[0] * 20} 
+          ${infimoCoord[0] * 20 + 200},${this.WallWidth[1] * 20} 
+          ${supremoCoord[0] * 20 + 200},${this.WallWidth[1] * 20} 
+          ${supremoCoord[0] * 20 + 200},${this.WallWidth[0] * 20}`}
           stroke={"rgb(60,98,186)"}
           fill="rgb(138,164,217,0.5)"
           id={"UNDEFINED_ID-" + this.Id}
@@ -856,7 +879,7 @@ class RightEndPoint extends WallEndPoint {
             opacity: 1,
             position: "relative",
             zIndex: 10,
-            display: isSelected ? "block" : "none",
+            display: "block"
           }}
         ></polygon>
       </>)
@@ -907,6 +930,7 @@ class LeftEndPoint extends WallEndPoint {
 
   render(): React.ReactNode {
     const dispatch = useDispatch();
+    const zoomScale = useSelector(GET_ZOOM_SCALE)
     const ThisWall = useSelector(GET_SELECTED_WALL);
 
     const [infimoCoord, setInfimoCoords] = useState([
@@ -924,7 +948,6 @@ class LeftEndPoint extends WallEndPoint {
     const wallWith = ThisWall.Id != "" ? this.getWallWith(ThisWall) : [0,0];
 
     let isWall = selectedState.WallEndPoints.WallEndPointsIds.includes(this.Id);
-
     let isSelected = selectedWallEndPoint.Id == this.Id;
 
     const logMousePositionInfimo = (event: any) => {
@@ -932,7 +955,7 @@ class LeftEndPoint extends WallEndPoint {
         .getElementById("plane_container")
         ?.getBoundingClientRect();
       if (container) {
-        const coordX = event.clientX - container.x;
+        const coordX = (event.clientX - container.x) / zoomScale;
 
         let distance = 0;
         let X = (coordX - 200) / 20;
@@ -951,13 +974,14 @@ class LeftEndPoint extends WallEndPoint {
         .getElementById("plane_container")
         ?.getBoundingClientRect();
       if (container) {
-        const coordX = event.clientX - container.x;
+        const coordX = (event.clientX - container.x) / zoomScale;
 
         let distance = 0;
         let X = (coordX - 200) / 20;
         let Y = this.Coords[1];
         distance = this.Coords[0] - X;
 
+        console.log("MOUSE_POSITION_SUPREMO_LEFT=", distance)
         this.Supremo = this.assignSupremo([X, Y], distance);
         setSupremoCoord(this.Supremo);
         dispatch(UPDATE_WALL_END_POINT_SUPREMO(this.Supremo ))
@@ -1035,7 +1059,7 @@ class LeftEndPoint extends WallEndPoint {
             position: "absolute",
             zIndex: 1000,
             cursor: "e-resize",
-            display: isSelected ? "block" : "none",
+            display: "block"
           }}
         />
         <circle
@@ -1051,15 +1075,15 @@ class LeftEndPoint extends WallEndPoint {
             position: "absolute",
             zIndex: 1000,
             cursor: "w-resize",
-            display: isSelected ? "block" : "none",
+            display: "block"
           }}
         />
         <polygon
           points={`
-          ${infimoCoord[0] * 20 + 200},${wallWith[0] * 20} 
-          ${infimoCoord[0] * 20 + 200},${wallWith[1] * 20} 
-          ${supremoCoord[0] * 20 + 200},${wallWith[1] * 20} 
-          ${supremoCoord[0] * 20 + 200},${wallWith[0] * 20}`}
+          ${infimoCoord[0] * 20 + 200},${this.WallWidth[0] * 20} 
+          ${infimoCoord[0] * 20 + 200},${this.WallWidth[1] * 20} 
+          ${supremoCoord[0] * 20 + 200},${this.WallWidth[1] * 20} 
+          ${supremoCoord[0] * 20 + 200},${this.WallWidth[0] * 20}`}
           stroke={"rgb(60,98,186)"}
           fill="rgb(138,164,217,0.5)"
           id={"UNDEFINED_ID-" + this.Id}
@@ -1068,7 +1092,7 @@ class LeftEndPoint extends WallEndPoint {
             opacity: 1,
             position: "relative",
             zIndex: 10,
-            display: isSelected ? "block" : "none",
+            display: "block"
           }}
         ></polygon>
       </>)
