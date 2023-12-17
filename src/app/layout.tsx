@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import { Analytics } from '@vercel/analytics/react';
 import './globals.css'
 import ReduxProvider from '../redux/ReduxProvider'
 import { SpeedInsights } from '@vercel/speed-insights/next'
@@ -22,6 +23,7 @@ export default function RootLayout(props: {
             <div id="portal-root"></div>
           </ReduxProvider>
           <SpeedInsights />
+          <Analytics/>
         </body>
     </html>
   )
