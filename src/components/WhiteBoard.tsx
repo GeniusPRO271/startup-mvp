@@ -7666,7 +7666,6 @@ function WhiteBoardContext() {
         }
       }
     }
-    const width = document.getElementById("Story1")?.offsetWidth
   // -------------------
     const PlantaArqui = new PlantaArquitecura()
   return (
