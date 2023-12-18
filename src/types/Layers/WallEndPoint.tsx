@@ -357,6 +357,7 @@ class TopEndPoint extends WallEndPoint {
       let slider = document.getElementById(e.target.id);
 
       if (slider) {
+        dispatch(UPDATE_EDIT_STATE(true))
         slider.onpointermove = logMousePositionInfimo;
         slider.setPointerCapture(e.pointerId);
       }
@@ -366,6 +367,7 @@ class TopEndPoint extends WallEndPoint {
       let slider = document.getElementById(e.target.id);
 
       if (slider) {
+        dispatch(UPDATE_EDIT_STATE(true))
         slider.onpointermove = logMousePositionSupremo;
         slider.setPointerCapture(e.pointerId);
       }
@@ -391,7 +393,6 @@ class TopEndPoint extends WallEndPoint {
       console.log("THIS_INFIMO_INIT", this.Infimo);
   
       if (slider && isScrolling == false) {
-        dispatch(UPDATE_EDIT_STATE(true))
         slider.onpointerdown =
           type == "INFIMO" ? beginSlidingInfimo : beginSlidingSupremo;
         slider.onpointerup = stopSliding;
@@ -572,6 +573,7 @@ class BottomEndPoint extends WallEndPoint {
       let slider = document.getElementById(e.target.id);
 
       if (slider) {
+        dispatch(UPDATE_EDIT_STATE(true))
         slider.onpointermove = logMousePositionInfimo;
         slider.setPointerCapture(e.pointerId);
       }
@@ -579,6 +581,7 @@ class BottomEndPoint extends WallEndPoint {
     const beginSlidingSupremo = (e: any) => {
       let slider = document.getElementById(e.target.id);
       if (slider) {
+        dispatch(UPDATE_EDIT_STATE(true))
         slider.onpointermove = logMousePositionSupremo;
         slider.setPointerCapture(e.pointerId);
       }
@@ -601,7 +604,6 @@ class BottomEndPoint extends WallEndPoint {
       console.log("THIS_INFIMO_INIT", this.Infimo);
 
       if (slider && isScrolling == false) {
-        dispatch(UPDATE_EDIT_STATE(true))
         slider.onpointerdown =
           type == "INFIMO" ? beginSlidingInfimo : beginSlidingSupremo;
         slider.onpointerup = stopSliding;
@@ -782,6 +784,7 @@ class RightEndPoint extends WallEndPoint {
       let slider = document.getElementById(e.target.id);
       
       if (slider) {
+        dispatch(UPDATE_EDIT_STATE(true))
         slider.onpointermove = logMousePositionInfimo;
         slider.setPointerCapture(e.pointerId);
       }
@@ -789,6 +792,7 @@ class RightEndPoint extends WallEndPoint {
     const beginSlidingSupremo = (e: any) => {
       let slider = document.getElementById(e.target.id);
       if (slider) {
+        dispatch(UPDATE_EDIT_STATE(true))
         slider.onpointermove = logMousePositionSupremo;
         slider.setPointerCapture(e.pointerId);
       }
@@ -813,7 +817,6 @@ class RightEndPoint extends WallEndPoint {
       console.log("MIN_LIMIT_WALL_END_POINT", this.MinLimit);
 
       if (slider && isScrolling == false) {
-        dispatch(UPDATE_EDIT_STATE(true))
         slider.onpointerdown =
           type == "INFIMO" ? beginSlidingInfimo : beginSlidingSupremo;
         slider.onpointerup = stopSliding;
@@ -1002,6 +1005,7 @@ class LeftEndPoint extends WallEndPoint {
       let slider = document.getElementById(e.target.id);
 
       if (slider) {
+        dispatch(UPDATE_EDIT_STATE(true))
         slider.onpointermove = logMousePositionInfimo;
         slider.setPointerCapture(e.pointerId);
       }
@@ -1009,6 +1013,7 @@ class LeftEndPoint extends WallEndPoint {
     const beginSlidingSupremo = (e: any) => {
       let slider = document.getElementById(e.target.id);
       if (slider) {
+        dispatch(UPDATE_EDIT_STATE(true))
         slider.onpointermove = logMousePositionSupremo;
         slider.setPointerCapture(e.pointerId);
       }
@@ -1030,7 +1035,6 @@ class LeftEndPoint extends WallEndPoint {
       console.log("THIS_SUPREMO_INIT ", this.Supremo);
       console.log("THIS_INFIMO_INIT", this.Infimo);
       if (slider && isScrolling == false) {
-        dispatch(UPDATE_EDIT_STATE(true))
         slider.onpointerdown =
           type == "INFIMO" ? beginSlidingInfimo : beginSlidingSupremo;
         slider.onpointerup = stopSliding;
