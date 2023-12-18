@@ -1,4 +1,5 @@
 import React from "react";
+import style from "@/app/page.module.css";
 import Floor from "./Floor";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -7,6 +8,9 @@ import {
   selectActiveFloor,
 } from "@/redux/slices/floorSlice";
 import "@/app/page.module.css";
+import Image from "next/image";
+import { PlantaArquitecura } from "@/assets/Icons/icon";
+import { color } from "framer-motion";
 
 export default class Building {
   public RawData: any;
@@ -82,6 +86,7 @@ export default class Building {
 
   render(): React.ReactNode {
     const activeFloor = useSelector(selectActiveFloor);
+    const PlantaArqui = new PlantaArquitecura()
     return this.Floors.map((floor) => {
       return (
         <g
@@ -90,8 +95,10 @@ export default class Building {
           style={{ display: activeFloor == floor.FloorId ? "block" : "none" }}
         >
           {floor.Layers.map((layerGroup) => {
-            return <g key={layerGroup.Id + "layer"}>{layerGroup.render()}</g>;
+            return <g key={layerGroup.Id + "layer"}>{layerGroup.render()}
+            </g>;
           })}
+               
         </g>
       );
     });

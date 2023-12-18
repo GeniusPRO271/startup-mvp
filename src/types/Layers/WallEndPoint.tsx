@@ -1,6 +1,8 @@
 import {
+  GET_SCROLL_STATE,
   GET_SELECTED_WALL,
   GET_SELECTED_WALL_END_POINT,
+  UPDATE_EDIT_STATE,
   UPDATE_SELECTED_WALL_END_POINT,
   UPDATE_WALL_END_POINT_INFIMO,
   UPDATE_WALL_END_POINT_SUPREMO,
@@ -295,7 +297,6 @@ class TopEndPoint extends WallEndPoint {
   render(): React.ReactNode {
     const dispatch = useDispatch();
     const zoomScale = useSelector(GET_ZOOM_SCALE)
-    const ThisWall = useSelector(GET_SELECTED_WALL);
 
     const [infimoCoord, setInfimoCoords] = useState([
       this.Coords[0],
@@ -308,11 +309,10 @@ class TopEndPoint extends WallEndPoint {
     ]);
 
     const selectedState = useSelector(GET_SELECTED_WALL);
-    const selectedWallEndPoint = useSelector(GET_SELECTED_WALL_END_POINT);
 
     let isWall = selectedState.WallEndPoints.WallEndPointsIds.includes(this.Id);
 
-    let isSelected = selectedWallEndPoint.Id == this.Id;
+    let isScrolling = useSelector(GET_SCROLL_STATE)
 
     const logMousePositionInfimo = (event: any) => {
       const container = document
@@ -380,6 +380,8 @@ class TopEndPoint extends WallEndPoint {
         console.log("THIS_SUPREMO ", this.Supremo);
         console.log("THIS_INFIMO ", this.Infimo);
       }
+      dispatch(UPDATE_EDIT_STATE(false))
+      
     };
 
     const handleChange = (event: any, type: string) => {
@@ -387,11 +389,13 @@ class TopEndPoint extends WallEndPoint {
 
       console.log("THIS_SUPREMO_INIT ", this.Supremo);
       console.log("THIS_INFIMO_INIT", this.Infimo);
-
-      if (slider) {
+  
+      if (slider && isScrolling == false) {
+        dispatch(UPDATE_EDIT_STATE(true))
         slider.onpointerdown =
           type == "INFIMO" ? beginSlidingInfimo : beginSlidingSupremo;
         slider.onpointerup = stopSliding;
+
       }
     };
 
@@ -508,7 +512,6 @@ class BottomEndPoint extends WallEndPoint {
   render(): React.ReactNode {
     const dispatch = useDispatch();
     const zoomScale = useSelector(GET_ZOOM_SCALE)
-    const ThisWall = useSelector(GET_SELECTED_WALL);
 
     const [infimoCoord, setInfimoCoords] = useState([
       this.Coords[0],
@@ -521,12 +524,10 @@ class BottomEndPoint extends WallEndPoint {
     ]);
 
     const selectedState = useSelector(GET_SELECTED_WALL);
-    const selectedWallEndPoint = useSelector(GET_SELECTED_WALL_END_POINT);
-    const wallWith = ThisWall.Id != "" ? this.getWallWith(ThisWall) : [0,0];
 
     let isWall = selectedState.WallEndPoints.WallEndPointsIds.includes(this.Id);
 
-    let isSelected = selectedWallEndPoint.Id == this.Id;
+    const isScrolling = useSelector(GET_SCROLL_STATE)
 
     const logMousePositionInfimo = (event: any) => {
       const container = document
@@ -590,6 +591,7 @@ class BottomEndPoint extends WallEndPoint {
         slider.onpointermove = null;
         slider.releasePointerCapture(e.pointerId);
       }
+      dispatch(UPDATE_EDIT_STATE(false))
     };
 
     const handleChange = (event: any, type: string) => {
@@ -598,11 +600,14 @@ class BottomEndPoint extends WallEndPoint {
       console.log("THIS_SUPREMO_INIT ", this.Supremo);
       console.log("THIS_INFIMO_INIT", this.Infimo);
 
-      if (slider) {
+      if (slider && isScrolling == false) {
+        dispatch(UPDATE_EDIT_STATE(true))
         slider.onpointerdown =
           type == "INFIMO" ? beginSlidingInfimo : beginSlidingSupremo;
         slider.onpointerup = stopSliding;
+        
       }
+      
     };
 
     return (
@@ -731,13 +736,11 @@ class RightEndPoint extends WallEndPoint {
     ]);
 
     const selectedState = useSelector(GET_SELECTED_WALL);
-    const selectedWallEndPoint = useSelector(GET_SELECTED_WALL_END_POINT);
-    const wallWith = ThisWall.Id != "" ? this.getWallWith(ThisWall) : [0,0];
 
     let isWall = selectedState.WallEndPoints.WallEndPointsIds.includes(this.Id);
 
 
-    let isSelected = selectedWallEndPoint.Id == this.Id;
+    const isScrolling = useSelector(GET_SCROLL_STATE)
 
     const logMousePositionInfimo = (event: any) => {
       const container = document
@@ -777,7 +780,7 @@ class RightEndPoint extends WallEndPoint {
 
     const beginSlidingInfimo = (e: any) => {
       let slider = document.getElementById(e.target.id);
-
+      
       if (slider) {
         slider.onpointermove = logMousePositionInfimo;
         slider.setPointerCapture(e.pointerId);
@@ -798,6 +801,7 @@ class RightEndPoint extends WallEndPoint {
         slider.onpointermove = null;
         slider.releasePointerCapture(e.pointerId);
       }
+      dispatch(UPDATE_EDIT_STATE(false))
     };
 
     const handleChange = (event: any, type: string) => {
@@ -808,7 +812,8 @@ class RightEndPoint extends WallEndPoint {
       console.log("MAX_LIMIT_WALL_END_POINT", this.MaxLimit);
       console.log("MIN_LIMIT_WALL_END_POINT", this.MinLimit);
 
-      if (slider) {
+      if (slider && isScrolling == false) {
+        dispatch(UPDATE_EDIT_STATE(true))
         slider.onpointerdown =
           type == "INFIMO" ? beginSlidingInfimo : beginSlidingSupremo;
         slider.onpointerup = stopSliding;
@@ -953,7 +958,7 @@ class LeftEndPoint extends WallEndPoint {
     const wallWith = ThisWall.Id != "" ? this.getWallWith(ThisWall) : [0,0];
 
     let isWall = selectedState.WallEndPoints.WallEndPointsIds.includes(this.Id);
-    let isSelected = selectedWallEndPoint.Id == this.Id;
+    let isScrolling = useSelector(GET_SCROLL_STATE)
 
     const logMousePositionInfimo = (event: any) => {
       const container = document
@@ -1016,6 +1021,7 @@ class LeftEndPoint extends WallEndPoint {
         slider.onpointermove = null;
         slider.releasePointerCapture(e.pointerId);
       }
+      dispatch(UPDATE_EDIT_STATE(false))
     };
 
     const handleChange = (event: any, type: string) => {
@@ -1023,8 +1029,8 @@ class LeftEndPoint extends WallEndPoint {
 
       console.log("THIS_SUPREMO_INIT ", this.Supremo);
       console.log("THIS_INFIMO_INIT", this.Infimo);
-
-      if (slider) {
+      if (slider && isScrolling == false) {
+        dispatch(UPDATE_EDIT_STATE(true))
         slider.onpointerdown =
           type == "INFIMO" ? beginSlidingInfimo : beginSlidingSupremo;
         slider.onpointerup = stopSliding;

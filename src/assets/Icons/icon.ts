@@ -5,7 +5,7 @@ import xIcon from "../x-solid.svg"
 import infoIcon from "../circle-info-solid.svg"
 import TrashCanIcon from "../trash-solid.svg"
 import BackIcon from "../rotate-left-solid.svg"
-
+import PlantaArqui from "../Planta Arquitectura 1.svg"
 export default interface Icon{
     Src:any
     Id:string
@@ -77,5 +77,15 @@ export class RevertIcon implements Icon{
     constructor(){
         this.Id = "rotate-left-solid.svg"
         this.Src = BackIcon
+    }
+}
+
+export class PlantaArquitecura implements Icon{
+    Src: any
+    Id: string
+
+    constructor(){
+        this.Id = "Planta Arquitectura 1.svg"
+        this.Src = PlantaArqui
     }
 }

@@ -9,7 +9,7 @@ interface FloorState {
 }
 
 const initialState: FloorState = {
-  selectedFloor: "story1",
+  selectedFloor: "Story1",
   floors: "",
 };
 
