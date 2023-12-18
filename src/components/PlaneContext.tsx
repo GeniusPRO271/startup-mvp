@@ -1,3 +1,4 @@
+"use client"
 import Plane from "@/types/Plane";
 import React, { useEffect, useState } from "react";
 
