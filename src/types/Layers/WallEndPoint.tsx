@@ -448,7 +448,7 @@ class TopEndPoint extends WallEndPoint {
             display: "block"
           }}
         />
-        <polygon
+        { (infimoCoord[1] != this.Coords[1]  || supremoCoord[1] != this.Coords[1])  &&  <polygon
           points={`
                 ${this.WallWidth[0] * 20 + 200},${infimoCoord[1] * 20} 
                 ${this.WallWidth[1] * 20 + 200},${infimoCoord[1] * 20} 
@@ -464,6 +464,7 @@ class TopEndPoint extends WallEndPoint {
             display:  "block",
           }}
         ></polygon>
+        }
       </>)
     );
   }
@@ -656,14 +657,16 @@ class BottomEndPoint extends WallEndPoint {
             display: "block" ,
           }}
         />
-        <polygon
+        {
+          (infimoCoord[1] != this.Coords[1]  || supremoCoord[1] != this.Coords[1])  && 
+          <polygon
           points={`
           ${this.WallWidth[0] * 20 + 200},${infimoCoord[1] * 20} 
           ${this.WallWidth[1] * 20 + 200},${infimoCoord[1] * 20} 
           ${this.WallWidth[1] * 20 + 200},${supremoCoord[1] * 20} 
           ${this.WallWidth[0] * 20 + 200},${supremoCoord[1] * 20}`}
-                stroke={"rgb(60,98,186)"}
-                fill="rgb(138,164,217,0.5)"
+          stroke={"rgb(60,98,186)"}
+          fill="rgb(138,164,217,0.5)"
           id={"UNDEFINED_ID-" + this.Id}
           key={"UNDEFINED_ID-" + this.Id}
           style={{
@@ -671,8 +674,9 @@ class BottomEndPoint extends WallEndPoint {
             zIndex: 10,
             display: "block",
           }}
-        ></polygon>
-      </>)
+          ></polygon>
+        }
+        </>)
     );
   }
 }
@@ -865,7 +869,7 @@ class RightEndPoint extends WallEndPoint {
           }}
         />
         
-        <polygon
+        { (infimoCoord[0] != this.Coords[0]  || supremoCoord[0] != this.Coords[0])  &&  <polygon
           points={`
           ${infimoCoord[0] * 20 + 200},${this.WallWidth[0] * 20} 
           ${infimoCoord[0] * 20 + 200},${this.WallWidth[1] * 20} 
@@ -882,6 +886,7 @@ class RightEndPoint extends WallEndPoint {
             display: "block"
           }}
         ></polygon>
+        }
       </>)
     );
   }
@@ -1078,7 +1083,7 @@ class LeftEndPoint extends WallEndPoint {
             display: "block"
           }}
         />
-        <polygon
+        {(infimoCoord[0] != this.Coords[0]  || supremoCoord[0] != this.Coords[0])  && <polygon
           points={`
           ${infimoCoord[0] * 20 + 200},${this.WallWidth[0] * 20} 
           ${infimoCoord[0] * 20 + 200},${this.WallWidth[1] * 20} 
@@ -1094,7 +1099,7 @@ class LeftEndPoint extends WallEndPoint {
             zIndex: 10,
             display: "block"
           }}
-        ></polygon>
+        ></polygon>}
       </>)
     );
   }
