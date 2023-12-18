@@ -9,21 +9,22 @@ function PlaneContext(plane: Plane) {
     const [scrollX, setScrollX] = useState(0);
     const [clientY, setClientY] = useState(0);
     const [scrollY, setScrollY] = useState(0);
-  
+
+    if (typeof document !== 'undefined') {
+      // code that relies on the document object
+    }
     const onMouseDown = (e: any) => {
       setIsScrolling(true)
-      console.log("MOUSE_DOWN_FOR_SCROLLING")
-      console.log("SCROLL_Y=", scrollY)
-      console.log("SCROLL_X=", scrollX)
-      console.log("CLIENT_Y=", e.clientY)
-      console.log("CLIENT_X=", e.clientX)
-      const whiteboard = document.getElementById("canvasBox")
-      if(whiteboard){
-        setScrollX(whiteboard.scrollLeft)
-        setScrollY(whiteboard.scrollTop)
+      if (typeof document !== 'undefined') {
+        // code that relies on the document object
+        const whiteboard = document.getElementById("canvasBox")
+        if(whiteboard){
+          setScrollX(whiteboard.scrollLeft)
+          setScrollY(whiteboard.scrollTop)
+        }
+        setClientX(e.clientX)
+        setClientY(e.clientY)
       }
-      setClientX(e.clientX)
-      setClientY(e.clientY)
  
       
 
@@ -35,27 +36,30 @@ function PlaneContext(plane: Plane) {
   
     const onMouseUp = () => {
       setIsScrolling(false)
-      const Cursor = document.getElementById("plane_container")
-      if (Cursor) {
-        Cursor.style.cursor = "default"
+      if (typeof document !== 'undefined') {
+        const Cursor = document.getElementById("plane_container")
+        if (Cursor) {
+          Cursor.style.cursor = "default"
+        }
       }
     };
   
     const onMouseMove = (e: any)  => {
-    
-      const whiteboard = document.getElementById("canvasBox")
-      if (scrolling && whiteboard) {
-        console.log("SCROLL_Y=", scrollY)
-        console.log("SCROLL_X=", scrollX)
-        console.log("CLIENT_Y=", e.clientY)
-        console.log("CLIENT_X=", e.clientX)
-        console.log("MOUSE_MOVING_FOR_SCROLLING")
-        whiteboard.scrollLeft = scrollX + e.clientX - clientX;
-        setScrollX((x) => { return x - e.clientX + clientX})
-        setClientX(e.clientX)
-        whiteboard.scrollTop = scrollY + e.clientY - clientY;
-        setScrollY((x) => { return x - e.clientY + clientY})
-        setClientY(e.clientY)
+      if (typeof document !== 'undefined') {
+        const whiteboard = document.getElementById("canvasBox")
+        if (scrolling && whiteboard) {
+          console.log("SCROLL_Y=", scrollY)
+          console.log("SCROLL_X=", scrollX)
+          console.log("CLIENT_Y=", e.clientY)
+          console.log("CLIENT_X=", e.clientX)
+          console.log("MOUSE_MOVING_FOR_SCROLLING")
+          whiteboard.scrollLeft = scrollX + e.clientX - clientX;
+          setScrollX((x) => { return x - e.clientX + clientX})
+          setClientX(e.clientX)
+          whiteboard.scrollTop = scrollY + e.clientY - clientY;
+          setScrollY((x) => { return x - e.clientY + clientY})
+          setClientY(e.clientY)
+        }
       }
     };
   const building = plane.Building;
