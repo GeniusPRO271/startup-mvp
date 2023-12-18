@@ -4,11 +4,8 @@ import style from "@/app/page.module.css";
 import PlaneContext from "./PlaneContext";
 import Building from "@/types/Building";
 import Plane from "@/types/Plane";
-import { useDispatch, useSelector } from "react-redux";
-import { GET_ZOOM_SCALE, GET_ZOOM_STATE, UPDATE_ZOOM_HEIGHT, UPDATE_ZOOM_HEIGHT_PERC, UPDATE_ZOOM_SCALE, UPDATE_ZOOM_WIDTH, UPDATE_ZOOM_WIDTH_PERC } from "@/redux/slices/zoomSlice";
-import Zoom from "./Zoom";
+import { useDispatch } from "react-redux";
 
-// Interface of whiteboard in the future should be a class with mothods
 interface WhiteBoard {
   plane: Plane;
   //owner: User for future user with User
@@ -3944,14 +3941,6 @@ function WhiteBoardContext() {
     },
   };
   // -------------------
-  const whiteboard = document.getElementById('canvasBox');
-  const startDragging = () => {
-    if(whiteboard){
-      console.log("WHITE_BOARD_DRAGGING")
-      whiteboard.style.cursor = 'grab';
-    }
-
-  }
 
   return (
     <>
@@ -3963,7 +3952,6 @@ function WhiteBoardContext() {
       <div
         id="canvaId"
         className={style.canvas}
-        onMouseEnter={startDragging}
         style={{
           width: 85400,
           minWidth: 85400,
