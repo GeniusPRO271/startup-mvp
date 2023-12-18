@@ -11,7 +11,6 @@ import { motion } from "framer-motion";
 function ToolKitContext() {
 
   const WallLayerToggle = new LayerToggle("W-Num","wall", new WallIcon(), "walls")
-  const JoinLayerToggle = new LayerToggle("J-Num","join", new JoinIcon(), "wallNodes")
   const SlabLayerToggle = new LayerToggle("S-Num","slab", new SlabIcon(), "slabs")
   const FloorPickerButton = new FloorPicker("S")
 
@@ -35,7 +34,7 @@ function ToolKitContext() {
     }
   };
 
-  const toolKit = new ToolKit("ToolKit", [FloorPickerButton,WallLayerToggle,JoinLayerToggle,SlabLayerToggle] )
+  const toolKit = new ToolKit("ToolKit", [FloorPickerButton,WallLayerToggle,SlabLayerToggle] )
   return (
     <motion.div className={style.toolBar} id={toolKit.Id} variants={container} initial="hidden" animate="visible">
           <div className={style.toolBarButtons}>

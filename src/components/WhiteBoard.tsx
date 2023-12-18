@@ -16,6 +16,7 @@ interface WhiteBoard {
 }
 
 function WhiteBoardContext() {
+  const [dragging, isDragging] = useState(false)
   const dispatch = useDispatch()
   // Temporary data for the building , this one is hardcoded 
   const data = {
@@ -3943,17 +3944,26 @@ function WhiteBoardContext() {
     },
   };
   // -------------------
+  const whiteboard = document.getElementById('canvasBox');
+  const startDragging = () => {
+    if(whiteboard){
+      console.log("WHITE_BOARD_DRAGGING")
+      whiteboard.style.cursor = 'grab';
+    }
 
+  }
 
   return (
     <>
     <div
       className={style.canvasBox}
+      id="canvasBox"
       style={{ touchAction: "none" }}
     >
       <div
         id="canvaId"
         className={style.canvas}
+        onMouseEnter={startDragging}
         style={{
           width: 85400,
           minWidth: 85400,
