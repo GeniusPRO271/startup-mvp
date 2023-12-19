@@ -4,7 +4,7 @@ import style from "@/app/page.module.css";
 import PlaneContext from "./PlaneContext";
 import Building from "@/types/Building";
 import Plane from "@/types/Plane";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { PlantaArquitecura } from "@/assets/Icons/icon";
 import Image from "next/image";
 import arquitecture from "../assets/Planta Arquitectura 1.svg"
@@ -7696,9 +7696,13 @@ function WhiteBoardContext() {
         >
 
               <div className={style.canvas_grid} />
-              <Image
+             <Image
               src={PlantaArqui.Src}
               alt={PlantaArqui.Id}
+              id="PlantaArquitectura"
+              key={"PlantaArquitectura"}
+              quality={10}
+              priority={true}
               className={style.PlantaArqui}
             />  
           <PlaneContext PlaneId="Plane_1" Building={new Building(data,"B-1",restrictions)} />

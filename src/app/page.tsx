@@ -12,9 +12,9 @@ export default function Home() {
   return (
     <div className={styles.editor}>
       
+      <ToolKitContext/>
       <WhiteBoard/>
       <Zoom/>
-      <ToolKitContext/>
       <WallInfo/>
       
     </div>

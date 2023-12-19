@@ -223,7 +223,7 @@ class HorizontalWall extends Wall {
         onClick={(event: React.MouseEvent<SVGPolygonElement, MouseEvent>) => {
           dispatch(UPDATE_SELECTED_WALL(this.SerializedWall()));
           dispatch(UPDATE_SHOW_WALL_INFO_TOGGLE(true));
-
+          console.log("WALL_PRESSED_COORDS=", this.Coords)
           if (this.WallEndPoints.PairOfWallEndPoints) {
             dispatch(
               UPDATE_SELECTED_WALL_END_POINT(

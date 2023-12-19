@@ -1,4 +1,4 @@
-import Icon from "@/assets/Icons/icon";
+import Icon, { LayerIcon } from "@/assets/Icons/icon";
 import ITool from "../interfaces/ITool";
 import style from "@/app/page.module.css";
 import { ReactNode } from "react";
@@ -17,6 +17,7 @@ import {
   selectIsbuttonActive,
 } from "@/redux/slices/buttonSlice";
 import Building from "../Building";
+import Image from "next/image";
 
 export default class FloorPicker implements ITool {
   Id: string;
@@ -174,6 +175,7 @@ export default class FloorPicker implements ITool {
     const activeFloor = useSelector(selectActiveFloor);
     const activeButton = useSelector(selectActiveButton);
     const buttonState = useSelector(selectIsbuttonActive);
+    const layerIcon = new LayerIcon()
     const dispatch = useDispatch();
     return (
       <div className={style.toolBarItem} id={this.Id} key={this.Id}>
@@ -191,7 +193,12 @@ export default class FloorPicker implements ITool {
             }
           }}
         >
-          {activeFloor}
+          <Image
+          src={layerIcon.Src}
+          alt={layerIcon.Id}
+          width={16}
+          height={16}
+          />
         </button>
       </div>
     );

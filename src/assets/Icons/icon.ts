@@ -6,6 +6,9 @@ import infoIcon from "../circle-info-solid.svg"
 import TrashCanIcon from "../trash-solid.svg"
 import BackIcon from "../rotate-left-solid.svg"
 import PlantaArqui from "../Planta Arquitectura 1.svg"
+import PencilIcon from "../pencil-solid.svg"
+import LayerGroupIcon from "../layer-group-solid.svg"
+import Arquitecture from "../ArquitectureIcon.svg"
 export default interface Icon{
     Src:any
     Id:string
@@ -87,5 +90,35 @@ export class PlantaArquitecura implements Icon{
     constructor(){
         this.Id = "Planta Arquitectura 1.svg"
         this.Src = PlantaArqui
+    }
+}
+
+export class Pencil implements Icon{
+    Src: any
+    Id: string
+
+    constructor(){
+        this.Id = "pencil-solid.svg"
+        this.Src = PencilIcon
+    }
+}
+
+export class LayerIcon implements Icon{
+    Src: any
+    Id: string
+
+    constructor(){
+        this.Id = "layer-group-solid.svg"
+        this.Src = LayerGroupIcon
+    }
+}
+
+export class ArquitectureIcon implements Icon{
+    Src: any
+    Id: string
+
+    constructor(){
+        this.Id = "ArquitectureIcon.svg"
+        this.Src = Arquitecture
     }
 }

@@ -944,7 +944,6 @@ class LeftEndPoint extends WallEndPoint {
   render(): React.ReactNode {
     const dispatch = useDispatch();
     const zoomScale = useSelector(GET_ZOOM_SCALE)
-    const ThisWall = useSelector(GET_SELECTED_WALL);
 
     const [infimoCoord, setInfimoCoords] = useState([
       this.Coords[0],
@@ -957,8 +956,6 @@ class LeftEndPoint extends WallEndPoint {
     ]);
 
     const selectedState = useSelector(GET_SELECTED_WALL);
-    const selectedWallEndPoint = useSelector(GET_SELECTED_WALL_END_POINT);
-    const wallWith = ThisWall.Id != "" ? this.getWallWith(ThisWall) : [0,0];
 
     let isWall = selectedState.WallEndPoints.WallEndPointsIds.includes(this.Id);
     let isScrolling = useSelector(GET_SCROLL_STATE)
@@ -1010,6 +1007,7 @@ class LeftEndPoint extends WallEndPoint {
         slider.setPointerCapture(e.pointerId);
       }
     };
+    
     const beginSlidingSupremo = (e: any) => {
       let slider = document.getElementById(e.target.id);
       if (slider) {

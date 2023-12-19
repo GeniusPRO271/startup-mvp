@@ -36,6 +36,7 @@ interface selectedState {
   showWallInfo: boolean;
   isEditing: boolean;
   isScrolling:boolean
+  isDrawing: boolean
   deleted: WallSerialized[];
 }
 
@@ -79,6 +80,7 @@ const initialState: selectedState = {
   showWallInfo: false,
   isEditing: false,
   isScrolling: false,
+  isDrawing: false,
   deleted: [],
 };
 
@@ -92,6 +94,10 @@ const selectionSlice = createSlice({
     },
     UPDATE_SCROLL_STATE : (state, action: PayloadAction<boolean>) => {
       state.isScrolling = action.payload
+      return state
+    },
+    UPDATE_DRAWING_STATE : (state, action: PayloadAction<boolean>) => {
+      state.isDrawing = action.payload
       return state
     },
     UPDATE_SELECTED_WALL: (state, action: PayloadAction<WallSerialized>) => {
@@ -156,6 +162,7 @@ const selectionSlice = createSlice({
 export const {
   UPDATE_EDIT_STATE,
   UPDATE_SCROLL_STATE,
+  UPDATE_DRAWING_STATE,
   UPDATE_SELECTED_WALL,
   UPDATE_SHOW_WALL_INFO_TOGGLE,
   UPDATE_SELECTED_WALL_END_POINT,
@@ -175,3 +182,4 @@ export const GET_ALL_DATA = (state: RootState) => state.selectionSlice;
 export const GET_DELTED_LIST =  (state: RootState) => state.selectionSlice.deleted;
 export const GET_EDIT_STATE =  (state: RootState) => state.selectionSlice.isEditing;
 export const GET_SCROLL_STATE =  (state: RootState) => state.selectionSlice.isScrolling;
+export const GET_DRAWING_STATE =  (state: RootState) => state.selectionSlice.isDrawing;

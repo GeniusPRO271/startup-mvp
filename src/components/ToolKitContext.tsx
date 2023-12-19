@@ -1,18 +1,23 @@
 "use client"
 
 import ToolKit from "@/types/tools/Tool";
-import LayerToggle from "@/types/tools/LayerToggle";
+import LayerToggle, { PlantaArquitectureToggle } from "@/types/tools/LayerToggle";
 import React from "react";
 import style from "@/app/page.module.css"
-import { JoinIcon, SlabIcon, WallIcon } from "@/assets/Icons/icon";
+import { ArquitectureIcon, JoinIcon, Pencil, SlabIcon, WallIcon } from "@/assets/Icons/icon";
 import FloorPicker from "@/types/tools/FloorPicker";
 import { motion } from "framer-motion";
+import Drawing from "@/types/tools/Drawing";
 
 function ToolKitContext() {
 
   const WallLayerToggle = new LayerToggle("W-Num","wall", new WallIcon(), "walls")
   const SlabLayerToggle = new LayerToggle("S-Num","slab", new SlabIcon(), "slabs")
+  const PlantaArquiToggle = new PlantaArquitectureToggle("PlantaArquiToogle","PlantaArqui1", new ArquitectureIcon(), "PlantaArqui2")
+  const DrawingTool = new Drawing("DRAWING_TOGGLE","DRAWING", new Pencil())
   const FloorPickerButton = new FloorPicker("S")
+
+
 
   const container = {
     hidden: { x: -100 , opacity: 0},
@@ -34,7 +39,7 @@ function ToolKitContext() {
     }
   };
 
-  const toolKit = new ToolKit("ToolKit", [FloorPickerButton,WallLayerToggle,SlabLayerToggle] )
+  const toolKit = new ToolKit("ToolKit", [FloorPickerButton,WallLayerToggle,SlabLayerToggle, PlantaArquiToggle, DrawingTool] )
   return (
     <motion.div className={style.toolBar} id={toolKit.Id} variants={container} initial="hidden" animate="visible">
           <div className={style.toolBarButtons}>
