@@ -190,11 +190,11 @@ class VerticalWall extends Wall {
             );
           }
         }}
-        stroke={isDeleted ? deletedColorStroke : this.Color}
-        fill={isDeleted ? deletedColorFill : (isSelected ? "rgb(148,148,148)" : this.FillColor)}
+        stroke={isDeleted ? deletedColorStroke : (isSelected ? "rgb(255,221,51)": this.Color)}
+        fill={isDeleted ? deletedColorFill : (isSelected ? "rgb(255,231,112)" : this.FillColor)}
         id={"VERTICAL_WALL-" + this.Id}
         key={"VERTICAL_WALL-" + this.Id}
-        style={{
+        style={{  
           position: "absolute",
           zIndex: 100,
           cursor: "pointer"
@@ -212,7 +212,7 @@ class HorizontalWall extends Wall {
     );
     const deletedColorStroke = "rgb(252,96,101)";
     const deletedColorFill = "rgb(251,0, 17)";
-
+    const isSelected = useSelector(GET_SELECTED_WALL).Id == this.Id
     return (
       <polygon
         points={`
@@ -232,8 +232,8 @@ class HorizontalWall extends Wall {
             );
           }
         }}
-        stroke={isDeleted ? deletedColorStroke : this.Color}
-        fill={isDeleted ? deletedColorFill : this.FillColor}
+        stroke={isDeleted ? deletedColorStroke : (isSelected ? "rgb(255,221,51)": this.Color)}
+        fill={isDeleted ? deletedColorFill : (isSelected ? "rgb(255,231,112)" : this.FillColor)}
         id={"HORIZONTAL_WALL-" + this.Id}
         key={"HORIZONTAL_WALL-" + this.Id}
         style={{

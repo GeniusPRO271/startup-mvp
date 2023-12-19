@@ -7703,6 +7703,7 @@ function WhiteBoardContext() {
               key={"PlantaArquitectura"}
               quality={10}
               priority={true}
+              style={{opacity: 0.3}}
               className={style.PlantaArqui}
             />  
           <PlaneContext PlaneId="Plane_1" Building={new Building(data,"B-1",restrictions)} />
