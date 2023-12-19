@@ -88,7 +88,6 @@ export class PlantaArquitectureToggle extends LayerToggle {
       <div className={style.toolBarItem} id={this.Id} key={this.Id}>
         <button
           className={style.toolBarbutton}
-          style={ this.LayerState ? {background: "lightblue"} : {}}
 
           onClick={() => {
             this.OnClick()
