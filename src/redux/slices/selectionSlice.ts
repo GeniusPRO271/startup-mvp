@@ -26,8 +26,11 @@ interface WallEndPointSerialized {
   FillColor: string;
   Infimo: number[];
   Supremo: number[];
+  InfimoDistance: number,
+  SupremoDistance: number,
   MaxLimit: number;
   MinLimit: number;
+
 }
 
 interface selectedState {
@@ -39,33 +42,35 @@ interface selectedState {
   isDrawing: boolean
   deleted: WallSerialized[];
 }
-
-const initialState: selectedState = {
-  wall: {
-    Coords: [[]],
+const WALL_INIT = {
+  Coords: [[]],
+  Id: "",
+  Color: "",
+  FillColor: "",
+  WallEndPoints: {
+    Coords: [],
     Id: "",
-    Color: "",
-    FillColor: "",
-    WallEndPoints: {
-      Coords: [],
-      Id: "",
-      PairOfJoins: [
-        {
-          Coords: [],
-          Id: "",
-          Orientation: "",
-          Color: "",
-          FillColor: "",
-          Infimo: [0, 0],
-          Supremo: [0, 0],
-          MaxLimit: 0,
-          MinLimit: 0,
-        },
-      ],
-      WallEndPointsIds: ["0", "0"],
-      WallEndPointsRestrictions: "",
-    },
+    PairOfJoins: [
+      {
+        Coords: [],
+        Id: "",
+        Orientation: "",
+        Color: "",
+        FillColor: "",
+        Infimo: [0, 0],
+        Supremo: [0, 0],
+        InfimoDistance: 0,
+        SupremoDistance: 0,
+        MaxLimit: 0,
+        MinLimit: 0,
+      },
+    ],
+    WallEndPointsIds: ["0", "0"],
+    WallEndPointsRestrictions: "",
   },
+}
+const initialState: selectedState = {
+  wall: WALL_INIT,
   join: {
     Coords: [],
     Id: "",
@@ -74,6 +79,8 @@ const initialState: selectedState = {
     FillColor: "",
     Infimo: [0, 0],
     Supremo: [0, 0],
+    InfimoDistance: 0,
+    SupremoDistance: 0,
     MaxLimit: 0,
     MinLimit: 0,
   },
@@ -128,6 +135,19 @@ const selectionSlice = createSlice({
       state.join.Infimo = action.payload;
       return state;
     },
+    UPDATE_WALL_END_POINT_INFIMO_DISTANCE: (state, action: PayloadAction<number>) => {
+      const indexOfJoin = state.wall.WallEndPoints.PairOfJoins.findIndex(
+        (d) => d.Id === state.join.Id
+      );
+
+      if (indexOfJoin !== -1) {
+        state.wall.WallEndPoints.PairOfJoins[indexOfJoin].InfimoDistance =
+          action.payload;
+      }
+
+      state.join.InfimoDistance = action.payload;
+      return state;
+    },
     UPDATE_WALL_END_POINT_SUPREMO: (state, action: PayloadAction<number[]>) => {
       const indexOfJoin = state.wall.WallEndPoints.PairOfJoins.findIndex(
         (d) => d.Id === state.join.Id
@@ -139,6 +159,19 @@ const selectionSlice = createSlice({
       }
 
       state.join.Supremo = action.payload;
+      return state;
+    },
+    UPDATE_WALL_END_POINT_SUPREMO_DISTANCE: (state, action: PayloadAction<number>) => {
+      const indexOfJoin = state.wall.WallEndPoints.PairOfJoins.findIndex(
+        (d) => d.Id === state.join.Id
+      );
+
+      if (indexOfJoin !== -1) {
+        state.wall.WallEndPoints.PairOfJoins[indexOfJoin].SupremoDistance =
+          action.payload;
+      }
+
+      state.join.SupremoDistance = action.payload;
       return state;
     },
     ADD_WALL_TO_DELETED_LIST: (state, action: PayloadAction<WallSerialized>) => {
@@ -156,6 +189,10 @@ const selectionSlice = createSlice({
       state = initialState;
       return state;
     },
+    DELETE_WALL_STATE: (state) => {
+      state.wall = WALL_INIT;
+      return state;
+    },
   },
 });
 
@@ -167,10 +204,13 @@ export const {
   UPDATE_SHOW_WALL_INFO_TOGGLE,
   UPDATE_SELECTED_WALL_END_POINT,
   UPDATE_WALL_END_POINT_INFIMO,
+  UPDATE_WALL_END_POINT_INFIMO_DISTANCE,
   UPDATE_WALL_END_POINT_SUPREMO,
+  UPDATE_WALL_END_POINT_SUPREMO_DISTANCE,
   DELETE_ALL_STATES,
   ADD_WALL_TO_DELETED_LIST,
   REMOVE_WALL_FROM_DELETED_LIST,
+  DELETE_WALL_STATE,
 } = selectionSlice.actions;
 export default selectionSlice.reducer;
 
@@ -183,3 +223,4 @@ export const GET_DELTED_LIST =  (state: RootState) => state.selectionSlice.delet
 export const GET_EDIT_STATE =  (state: RootState) => state.selectionSlice.isEditing;
 export const GET_SCROLL_STATE =  (state: RootState) => state.selectionSlice.isScrolling;
 export const GET_DRAWING_STATE =  (state: RootState) => state.selectionSlice.isDrawing;
+

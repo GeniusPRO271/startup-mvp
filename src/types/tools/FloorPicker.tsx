@@ -172,7 +172,6 @@ export default class FloorPicker implements ITool {
   }
   render(): ReactNode {
     const floorsString = useSelector(selectFloors);
-    const activeFloor = useSelector(selectActiveFloor);
     const activeButton = useSelector(selectActiveButton);
     const buttonState = useSelector(selectIsbuttonActive);
     const layerIcon = new LayerIcon()

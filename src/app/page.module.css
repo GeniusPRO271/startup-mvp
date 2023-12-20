@@ -252,8 +252,8 @@
 /* Wall info styles */
 
 .WallInfoContainer{
-  width: 380px;
-  height: 260px;
+  width: 180px;
+  height: 150px;
   background-color: white;
   position: absolute;
   right: 20px;
@@ -278,7 +278,7 @@
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  padding-right: 20px;
+  padding-right: 10px;
 }
 .WallTable{
   margin-right: 5px;
@@ -308,20 +308,44 @@
   line-height: normal;
 }
 .WallBase{
-  width: 80px;
   height: 40px;
   min-height: 40px;
   display: flex;
   font-size: 18px;
+  justify-content: center;
   align-items: center;
   margin-top: 5px;
   padding: 0px;
-  padding-left: 10px;
   border-radius: 5px;
   background: #D9D9D9;
 }
+.WallText{
+  height: 40px;
+  min-height: 40px;
+  display: flex;
+  font-size: 18px;
+  justify-content: end;
+  align-items: center;
+  margin-top: 5px;
+  padding: 0px;
+  border-radius: 5px;
+}
 .Xicon{
   fill: pink;
+}
+.wallSidePanel{
+  overflow-y: scroll;
+  right: 235px;
+  margin: auto;
+  top: 0px;
+  bottom: 29px;
+  position: absolute;
+  background-color: transparent; 
+  color: #4a4a4a;
+  border-radius: 5px;
+  z-index: 11;
+  height: 150px;
+
 }
 .zoomContainer{
   position: absolute;

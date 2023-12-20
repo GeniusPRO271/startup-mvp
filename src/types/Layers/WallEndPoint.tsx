@@ -5,7 +5,9 @@ import {
   UPDATE_EDIT_STATE,
   UPDATE_SELECTED_WALL_END_POINT,
   UPDATE_WALL_END_POINT_INFIMO,
+  UPDATE_WALL_END_POINT_INFIMO_DISTANCE,
   UPDATE_WALL_END_POINT_SUPREMO,
+  UPDATE_WALL_END_POINT_SUPREMO_DISTANCE,
   WallSerialized,
 } from "@/redux/slices/selectionSlice";
 import { GET_ZOOM_SCALE } from "@/redux/slices/zoomSlice";
@@ -76,6 +78,8 @@ export class WallEndPoints {
           [0, 0],
           WALL_END_POINT_RESTRICTIONS[WALL_END_POINT_IDS[1]]["alargar"],
           WALL_END_POINT_RESTRICTIONS[WALL_END_POINT_IDS[1]]["acortar"],
+          0,
+          0,
           WALL_END_POINT_WALL_WIDTH
           
         );
@@ -89,6 +93,8 @@ export class WallEndPoints {
           [0, 0],
           WALL_END_POINT_RESTRICTIONS[WALL_END_POINT_IDS[0]]["alargar"],
           WALL_END_POINT_RESTRICTIONS[WALL_END_POINT_IDS[0]]["acortar"],
+          0,
+          0,
           WALL_END_POINT_WALL_WIDTH
           
         );
@@ -103,6 +109,8 @@ export class WallEndPoints {
           [0, 0],
           WALL_END_POINT_RESTRICTIONS[WALL_END_POINT_IDS[0]]["alargar"],
           WALL_END_POINT_RESTRICTIONS[WALL_END_POINT_IDS[0]]["acortar"],
+          0,
+          0,
           WALL_END_POINT_WALL_WIDTH
         );
         Join1 = new BottomEndPoint(
@@ -115,6 +123,8 @@ export class WallEndPoints {
           [0, 0],
           WALL_END_POINT_RESTRICTIONS[WALL_END_POINT_IDS[1]]["alargar"],
           WALL_END_POINT_RESTRICTIONS[WALL_END_POINT_IDS[1]]["acortar"],
+          0,
+          0,
           WALL_END_POINT_WALL_WIDTH
         );
       }
@@ -130,6 +140,8 @@ export class WallEndPoints {
           [0, 0],
           WALL_END_POINT_RESTRICTIONS[WALL_END_POINT_IDS[0]]["alargar"],
           WALL_END_POINT_RESTRICTIONS[WALL_END_POINT_IDS[0]]["acortar"],
+          0,
+          0,
           WALL_END_POINT_WALL_WIDTH
         );
         Join1 = new LeftEndPoint(
@@ -142,6 +154,8 @@ export class WallEndPoints {
           [0, 0],
           WALL_END_POINT_RESTRICTIONS[WALL_END_POINT_IDS[1]]["alargar"],
           WALL_END_POINT_RESTRICTIONS[WALL_END_POINT_IDS[1]]["acortar"],
+          0,
+          0,
           WALL_END_POINT_WALL_WIDTH
         );
       } else {
@@ -155,6 +169,8 @@ export class WallEndPoints {
           [0, 0],
           WALL_END_POINT_RESTRICTIONS[WALL_END_POINT_IDS[1]]["alargar"],
           WALL_END_POINT_RESTRICTIONS[WALL_END_POINT_IDS[1]]["acortar"],
+          0,
+          0,
           WALL_END_POINT_WALL_WIDTH
         );
         Join0 = new LeftEndPoint(
@@ -167,6 +183,8 @@ export class WallEndPoints {
           [0, 0],
           WALL_END_POINT_RESTRICTIONS[WALL_END_POINT_IDS[0]]["alargar"],
           WALL_END_POINT_RESTRICTIONS[WALL_END_POINT_IDS[0]]["acortar"],
+          0,
+          0,
           WALL_END_POINT_WALL_WIDTH
         );
       }
@@ -204,6 +222,8 @@ export class WallEndPoint {
   public MinLimit: number;
   public Infimo: Array<number>;
   public Supremo: Array<number>;
+  public InfimoDistance: number;
+  public SupremoDistance: number;
   public WallWidth: Array<number>
 
   constructor(
@@ -216,6 +236,8 @@ export class WallEndPoint {
     supremo: Array<number>,
     maxLimit: number,
     minLimit: number,
+    infimoDistance: number,
+    supremoDistance : number,
     wallWidth: Array<number>
   ) {
     this.Id = id;
@@ -225,6 +247,8 @@ export class WallEndPoint {
     this.FillColor = fillColor;
     this.Infimo = infimo;
     this.Supremo = supremo;
+    this.InfimoDistance = infimoDistance
+    this.SupremoDistance = supremoDistance
     this.MaxLimit = maxLimit;
     this.MinLimit = minLimit;
     this.WallWidth = wallWidth
@@ -239,6 +263,8 @@ export class WallEndPoint {
       FillColor: this.FillColor,
       Infimo: this.Infimo,
       Supremo: this.Supremo,
+      InfimoDistance: this.InfimoDistance,
+      SupremoDistance: this.SupremoDistance,
       MaxLimit: this.MaxLimit,
       MinLimit: this.MinLimit,
       WallWidth : this.WallWidth
@@ -251,6 +277,48 @@ export class WallEndPoint {
     } catch (err) {
       console.error("ERROR_AT_WALL_END_POINT_getWallWith()", err);
       return [];
+    }
+  }
+
+  static calculateDistance(Origin: number[], notOrigin: number[]) {
+    console.log("CALCULATE_DISTANCE_ORIGIN=", Origin)
+    console.log("CALCULATE_DISTANCE_NOT_ORIGIN=", notOrigin)
+    let origin = [Origin[0], Origin[1]]
+    // Check if both arrays have the same length
+    if (origin.length !== 2 || notOrigin.length !== 2 || notOrigin[0] == 0 || notOrigin[1] == 0) {
+      return 0
+    }
+  
+    // Check if x-coordinates are equal
+    if (origin[0] !== notOrigin[0]) {
+      // Calculate the difference along the x-axis
+      const xDistance = Math.abs(origin[0] - notOrigin[0]);
+      return xDistance;
+    } else {
+      // Calculate the difference along the y-axis
+      const yDistance = Math.abs(origin[1] - notOrigin[1]);
+      return yDistance;
+    }
+  }
+
+  public calculateDistance(Origin: number[], notOrigin: number[]) {
+    console.log("CALCULATE_DISTANCE_ORIGIN=", Origin)
+    console.log("CALCULATE_DISTANCE_NOT_ORIGIN=", notOrigin)
+    let origin = [Origin[0], Origin[1]]
+    // Check if both arrays have the same length
+    if (origin.length !== 2 || notOrigin.length !== 2 || notOrigin[0] == 0 || notOrigin[1] == 0) {
+      return 0
+    }
+  
+    // Check if x-coordinates are equal
+    if (origin[0] !== notOrigin[0]) {
+      // Calculate the difference along the x-axis
+      const xDistance = Math.abs(origin[0] - notOrigin[0]);
+      return xDistance;
+    } else {
+      // Calculate the difference along the y-axis
+      const yDistance = Math.abs(origin[1] - notOrigin[1]);
+      return yDistance;
     }
   }
 
@@ -327,7 +395,9 @@ class TopEndPoint extends WallEndPoint {
         distance = Y - this.Coords[1];
 
         this.Infimo = this.assignInfimo([X, Y], distance);
+        this.InfimoDistance = this.calculateDistance(this.Coords, this.Infimo)
         dispatch(UPDATE_WALL_END_POINT_INFIMO(this.Infimo))
+        dispatch(UPDATE_WALL_END_POINT_INFIMO_DISTANCE( this.InfimoDistance ))
         setInfimoCoords(this.Infimo);
       }
     };
@@ -348,7 +418,9 @@ class TopEndPoint extends WallEndPoint {
         distance = Y - this.Coords[1];
 
         this.Supremo = this.assignSupremo([X, Y], distance);
+        this.SupremoDistance = this.calculateDistance(this.Coords, this.Supremo)
         dispatch(UPDATE_WALL_END_POINT_SUPREMO(this.Supremo))
+        dispatch(UPDATE_WALL_END_POINT_SUPREMO_DISTANCE(this.SupremoDistance))
         setSupremoCoord(this.Supremo);
       }
     };
@@ -358,6 +430,7 @@ class TopEndPoint extends WallEndPoint {
 
       if (slider) {
         dispatch(UPDATE_EDIT_STATE(true))
+        dispatch(UPDATE_SELECTED_WALL_END_POINT(this.SerializedWallEndPoint()))
         slider.onpointermove = logMousePositionInfimo;
         slider.setPointerCapture(e.pointerId);
       }
@@ -368,6 +441,7 @@ class TopEndPoint extends WallEndPoint {
 
       if (slider) {
         dispatch(UPDATE_EDIT_STATE(true))
+        dispatch(UPDATE_SELECTED_WALL_END_POINT(this.SerializedWallEndPoint()))
         slider.onpointermove = logMousePositionSupremo;
         slider.setPointerCapture(e.pointerId);
       }
@@ -388,7 +462,7 @@ class TopEndPoint extends WallEndPoint {
 
     const handleChange = (event: any, type: string) => {
       let slider = document.getElementById(event.target.id);
-
+  
       console.log("THIS_SUPREMO_INIT ", this.Supremo);
       console.log("THIS_INFIMO_INIT", this.Infimo);
   
@@ -541,9 +615,14 @@ class BottomEndPoint extends WallEndPoint {
         let X = this.Coords[0];
         let Y = coordY / 20;
         distance = Y - this.Coords[1];
+        
 
         this.Infimo = this.assignInfimo([X, Y], distance);
+
+        this.InfimoDistance = this.calculateDistance(this.Coords, this.Infimo)
+        
         dispatch(UPDATE_WALL_END_POINT_INFIMO(this.Infimo))
+        dispatch(UPDATE_WALL_END_POINT_INFIMO_DISTANCE(this.InfimoDistance))
         setInfimoCoords(this.Infimo);
       }
     };
@@ -564,7 +643,9 @@ class BottomEndPoint extends WallEndPoint {
         distance = Y - this.Coords[1];
 
         this.Supremo = this.assignSupremo([X, Y], distance);
+        this.SupremoDistance = this.calculateDistance(this.Coords, this.Supremo)
         dispatch(UPDATE_WALL_END_POINT_SUPREMO(this.Supremo))
+        dispatch(UPDATE_WALL_END_POINT_SUPREMO_DISTANCE(this.SupremoDistance))
         setSupremoCoord(this.Supremo);
       }
     };
@@ -574,6 +655,7 @@ class BottomEndPoint extends WallEndPoint {
 
       if (slider) {
         dispatch(UPDATE_EDIT_STATE(true))
+        dispatch(UPDATE_SELECTED_WALL_END_POINT(this.SerializedWallEndPoint()))
         slider.onpointermove = logMousePositionInfimo;
         slider.setPointerCapture(e.pointerId);
       }
@@ -582,6 +664,7 @@ class BottomEndPoint extends WallEndPoint {
       let slider = document.getElementById(e.target.id);
       if (slider) {
         dispatch(UPDATE_EDIT_STATE(true))
+        dispatch(UPDATE_SELECTED_WALL_END_POINT(this.SerializedWallEndPoint()))
         slider.onpointermove = logMousePositionSupremo;
         slider.setPointerCapture(e.pointerId);
       }
@@ -602,7 +685,6 @@ class BottomEndPoint extends WallEndPoint {
 
       console.log("THIS_SUPREMO_INIT ", this.Supremo);
       console.log("THIS_INFIMO_INIT", this.Infimo);
-
       if (slider && isScrolling == false) {
         slider.onpointerdown =
           type == "INFIMO" ? beginSlidingInfimo : beginSlidingSupremo;
@@ -757,7 +839,9 @@ class RightEndPoint extends WallEndPoint {
         distance = this.Coords[0] - X;
 
         this.Infimo = this.assignInfimo([X, Y], distance);
+        this.InfimoDistance = this.calculateDistance(this.Coords, this.Infimo)
         dispatch(UPDATE_WALL_END_POINT_INFIMO(this.Infimo))
+        dispatch(UPDATE_WALL_END_POINT_INFIMO_DISTANCE(this.InfimoDistance))
         setInfimoCoords(this.Infimo);
       }
     };
@@ -775,7 +859,9 @@ class RightEndPoint extends WallEndPoint {
         distance = this.Coords[0] - X;
 
         this.Supremo = this.assignSupremo([X, Y], distance);
+        this.SupremoDistance = this.calculateDistance(this.Coords, this.Supremo)
         dispatch(UPDATE_WALL_END_POINT_SUPREMO(this.Supremo))
+        dispatch(UPDATE_WALL_END_POINT_SUPREMO_DISTANCE(this.SupremoDistance))
         setSupremoCoord(this.Supremo);
       }
     };
@@ -785,6 +871,7 @@ class RightEndPoint extends WallEndPoint {
       
       if (slider) {
         dispatch(UPDATE_EDIT_STATE(true))
+        dispatch(UPDATE_SELECTED_WALL_END_POINT(this.SerializedWallEndPoint()))
         slider.onpointermove = logMousePositionInfimo;
         slider.setPointerCapture(e.pointerId);
       }
@@ -793,6 +880,7 @@ class RightEndPoint extends WallEndPoint {
       let slider = document.getElementById(e.target.id);
       if (slider) {
         dispatch(UPDATE_EDIT_STATE(true))
+        dispatch(UPDATE_SELECTED_WALL_END_POINT(this.SerializedWallEndPoint()))
         slider.onpointermove = logMousePositionSupremo;
         slider.setPointerCapture(e.pointerId);
       }
@@ -815,7 +903,6 @@ class RightEndPoint extends WallEndPoint {
       console.log("THIS_INFIMO_INIT", this.Infimo);
       console.log("MAX_LIMIT_WALL_END_POINT", this.MaxLimit);
       console.log("MIN_LIMIT_WALL_END_POINT", this.MinLimit);
-
       if (slider && isScrolling == false) {
         slider.onpointerdown =
           type == "INFIMO" ? beginSlidingInfimo : beginSlidingSupremo;
@@ -921,8 +1008,7 @@ class LeftEndPoint extends WallEndPoint {
 
       return ([this.Coords[0], this.Coords[1]])
     } else {
-
-      return coords
+      return coords 
     }
   }
   assignInfimo(coords: number[], distance: number): number[] {
@@ -973,8 +1059,9 @@ class LeftEndPoint extends WallEndPoint {
         distance = this.Coords[0] - X;
 
         this.Infimo = this.assignInfimo([X, Y], distance);
-
+        this.InfimoDistance = this.calculateDistance(this.Coords, this.Infimo)
         dispatch(UPDATE_WALL_END_POINT_INFIMO(this.Infimo))
+        dispatch(UPDATE_WALL_END_POINT_INFIMO_DISTANCE(this.InfimoDistance))
         setInfimoCoords(this.Infimo);
       }
     };
@@ -993,8 +1080,10 @@ class LeftEndPoint extends WallEndPoint {
 
         console.log("MOUSE_POSITION_SUPREMO_LEFT=", distance)
         this.Supremo = this.assignSupremo([X, Y], distance);
+        this.SupremoDistance = this.calculateDistance(this.Coords, this.Supremo)
         setSupremoCoord(this.Supremo);
         dispatch(UPDATE_WALL_END_POINT_SUPREMO(this.Supremo ))
+        dispatch(UPDATE_WALL_END_POINT_SUPREMO_DISTANCE(this.SupremoDistance))
       }
     };
 
@@ -1003,6 +1092,7 @@ class LeftEndPoint extends WallEndPoint {
 
       if (slider) {
         dispatch(UPDATE_EDIT_STATE(true))
+        dispatch(UPDATE_SELECTED_WALL_END_POINT(this.SerializedWallEndPoint()))
         slider.onpointermove = logMousePositionInfimo;
         slider.setPointerCapture(e.pointerId);
       }
@@ -1012,6 +1102,7 @@ class LeftEndPoint extends WallEndPoint {
       let slider = document.getElementById(e.target.id);
       if (slider) {
         dispatch(UPDATE_EDIT_STATE(true))
+        dispatch(UPDATE_SELECTED_WALL_END_POINT(this.SerializedWallEndPoint()))
         slider.onpointermove = logMousePositionSupremo;
         slider.setPointerCapture(e.pointerId);
       }
